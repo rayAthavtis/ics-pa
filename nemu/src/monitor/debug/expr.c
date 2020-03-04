@@ -154,6 +154,7 @@ static int search_dmtop(int tk_sta, int tk_end) {
 	  else op = i;
 	}
   }
+  printf("search op: %c", tokens[op].type);
   return op;
 }
 
@@ -185,7 +186,10 @@ static int make_prase(int tk_sta, int tk_end) {
 	  case '/':
 		return val1 / val2;
 	  default:
-		assert(0);
+	  {
+		printf("defalt end\n");
+		return 0;
+	  }
 	}
   }
 }
@@ -197,7 +201,7 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
 
-  if (!make_prase(0, nr_token)) {
+  if (!make_prase(0, nr_token-1)) {
     printf("make_prase error\n");
 	*success = false;
 	return 0;
