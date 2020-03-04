@@ -90,8 +90,8 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
 		  case TK_NUM:
 		  {
-			// tokens[i].str = rules[i].regex;
-			printf("num: %s\n", rules[i].regex);
+			strncpy(tokens[i].str, substr_start, substr_len);
+			printf("num: %s\n", tokens[i].str);
 		    break;
 		  }
 		  case '+':
