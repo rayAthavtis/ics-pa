@@ -66,7 +66,6 @@ int nr_token;
 static bool make_token(char *e) {
   int position = 0;
   int i;
-  // int val1, val2;
   regmatch_t pmatch;
 
   nr_token = 0;
@@ -88,18 +87,10 @@ static bool make_token(char *e) {
          */
 		tokens[nr_token].type = rules[i].token_type;
 		// printf("type: %d\n", tokens[nr_token].type);
-        switch (tokens[nr_token].type) {
-		  case TK_NUM:
-		  {
-			strncpy(tokens[nr_token].str, substr_start, substr_len);
-			// printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
-		    break;
-		  }
-		  default:
-		  { 
-			printf("token type: %d\n", tokens[nr_token].type);
-		  }
-        }
+        if (tokens[nr_token].type == TK_NUM) {
+		  strncpy(tokens[nr_token].str, substr_start, substr_len);
+		  // printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
+		}
 		nr_token++;
         break;
       }
