@@ -86,13 +86,13 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		tokens[i].type = rules[i].token_type;
-		printf("type: %d\n", tokens[i].type);
-        switch (tokens[i].type) {
+		tokens[nr_token].type = rules[i].token_type;
+		printf("type: %d\n", tokens[nr_token].type);
+        switch (tokens[nr_token].type) {
 		  case TK_NUM:
 		  {
-			strncpy(tokens[i].str, substr_start, substr_len);
-			printf("i: %d, num: %s\n", i, tokens[i].str);
+			strncpy(tokens[nr_token].str, substr_start, substr_len);
+			printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 		    break;
 		  }
 		  case '+':
@@ -116,7 +116,7 @@ static bool make_token(char *e) {
 			break;
 		  }
 		  default: 
-			printf("token type: %d\n", rules[i].token_type);
+			printf("token type: %d\n", tokens[nr_token].type);
         }
 		nr_token++;
         break;
@@ -211,7 +211,6 @@ uint32_t expr(char *e, bool *success) {
   // TODO();
 
   // printf("end: %d", nr_token);
-  printf("tokens: 0:  %s\n", tokens[0].str);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
