@@ -95,26 +95,6 @@ static bool make_token(char *e) {
 			// printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 		    break;
 		  }
-		  case '+':
-		  {
-			printf("+\n");
-		    break;
-		  }
-		  case '-':
-		  {
-			printf("-\n");
-			break;
-		  }
-		  case '*':
-		  {
-			printf("*\n");
-			break;
-		  }
-		  case '/':
-		  {
-			printf("/\n");
-			break;
-		  }
 		  default:
 		  { 
 			printf("token type: %d\n", tokens[nr_token].type);
