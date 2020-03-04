@@ -168,6 +168,7 @@ static int make_prase(int tk_sta, int tk_end) {
   }
   else if (tk_sta == tk_end) {
   	sscanf(tokens[tk_sta].str, "%d", &val1);
+	printf("val: %d\n", val1);
 	return val1;
   }
   else if (ck_prt(tk_sta, tk_end) == true) {
@@ -205,6 +206,7 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
+  printf("end: %d", nr_token);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
