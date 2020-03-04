@@ -167,7 +167,7 @@ static int make_prase(int tk_sta, int tk_end) {
     return 0;
   }
   else if (tk_sta == tk_end) {
-	printf("value: %s\n", tokens[tk_sta].str);
+	printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
   	sscanf(tokens[tk_sta].str, "%d", &val1);
 	printf("val: %d\n", val1);
 	return val1;
