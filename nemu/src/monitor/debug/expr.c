@@ -96,24 +96,28 @@ static bool make_token(char *e) {
 		  }
 		  case '+':
 		  {
-			printf("+++++++\n");
-			// sscanf(tokens[i-1].str, "%x", val1);
-			// sscanf(tokens[i+1].str, "%x", val2);
-			// printf("come to: %d + %d", val1, val2);
-			// tokens[i].str = val1 + val2;
-			// printf(" = %s\n", tokens[i].str);
+			printf("+\n");
 		    break;
 		  }
 		  case '-':
+		  {
+			printf("-\n");
 			break;
+		  }
 		  case '*':
+		  {
+			printf("*\n");
 			break;
+		  }
 		  case '/':
+		  {
+			printf("/\n");
 			break;
+		  }
 		  default: 
 			printf("token type: %d\n", rules[i].token_type);
         }
-
+		nr_token++;
         break;
       }
     }
@@ -127,11 +131,76 @@ static bool make_token(char *e) {
   return true;
 }
 
+static bool ck_prt(int lp, int rp) {
+  if (tokens[lp].type==TK_LP && tokens[rp].type==TK_RP) {
+    return true;
+  }
+  return false;
+}
+
+static int search_dmtop(int tk_sta, int tk_end) {
+  int i;
+  int fl=0;
+  int op=0;
+  for (i=tk_sta; i<tk_end; i++) {
+    if (tokens[i].type != TK_NUM) {
+	  if (tokens[i].type == TK_RP)
+	    fl = 0;
+	  else if (tokens[i].type == TK_LP)
+	    fl = 1;
+	  if (fl == 1 || ((tokens[op].type == '+' || tokens[op].type == '-')
+		 && (tokens[i].type == '*' || tokens[i].type == '/')))
+		continue;
+	  else op = i;
+	}
+  }
+  return op;
+}
+
+static int make_prase(int tk_sta, int tk_end) {
+  int op;
+  int val1, val2;
+  if (tk_sta > tk_end) {
+	printf("make_prase wrong in eval\n");
+    return 0;
+  }
+  else if (tk_sta == tk_end) {
+  	sscanf(tokens[tk_sta].str, "%d", &val1);
+	return val1;
+  }
+  else if (ck_prt(tk_sta, tk_end) == true) {
+    return make_prase(tk_sta+1, tk_end-1);
+  }
+  else {
+	op = search_dmtop(tk_sta, tk_end);
+	val1 = make_prase(tk_sta, op - 1);
+	val2 = make_prase(op + 1, tk_end);
+	switch (tokens[op].type) {
+	  case '+':
+		return val1 + val2;
+	  case '-':
+		return val1 - val2;
+	  case '*':
+		return val1 * val2;
+	  case '/':
+		return val1 / val2;
+	  default:
+		assert(0);
+	}
+  }
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     printf("make_token error\n");
 	*success = false;
     return 0;
+  }
+
+  if (!make_prase(0, nr_token)) {
+    printf("make_prase error\n");
+	*success = false;
+	return 0;
   }
 
   /* TODO: Insert codes to evaluate the expression. */
