@@ -92,6 +92,7 @@ static bool make_token(char *e) {
 		  {
 			// tokens[i].str = rules[i].regex;
 			printf("num: %s\n", rules[i].regex);
+		    break;
 		  }
 		  case '+':
 		  {
@@ -101,13 +102,14 @@ static bool make_token(char *e) {
 			// printf("come to: %d + %d", val1, val2);
 			// tokens[i].str = val1 + val2;
 			// printf(" = %s\n", tokens[i].str);
+		    break;
 		  }
 		  case '-':
-			return true;
+			break;
 		  case '*':
-			return true;
+			break;
 		  case '/':
-			return true;
+			break;
 		  default: 
 			printf("token type: %d\n", rules[i].token_type);
         }
