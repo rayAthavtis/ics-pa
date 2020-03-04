@@ -132,8 +132,9 @@ static bool make_token(char *e) {
 }
 
 static bool ck_prt(int lp, int rp) {
-  if (tokens[lp].type==TK_LP && tokens[rp].type==TK_RP) {
-    return true;
+  if (tokens[lp].type == TK_LP && tokens[rp].type == TK_RP) {
+    printf("a pair of prt\n");
+	return true;
   }
   return false;
 }
@@ -201,15 +202,11 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
 
-  if (!make_prase(0, nr_token-1)) {
-    printf("make_prase error\n");
-	*success = false;
-	return 0;
-  }
-
   /* TODO: Insert codes to evaluate the expression. */
-  printf("expr test\n");
   // TODO();
 
+  int res = make_prase(0, nr_token-1);
+  printf("result: %d\n", res);
+  
   return 0;
 }

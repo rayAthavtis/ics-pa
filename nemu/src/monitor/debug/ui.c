@@ -150,7 +150,6 @@ static int cmd_p(char *args) {
     printf("args error in cmd_p\n");
 	return 0;
   }
-  printf("result:\n");
   expr(s, res);
   printf("expr done\n");
   return 0;
