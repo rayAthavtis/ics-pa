@@ -155,7 +155,7 @@ static int search_dmtop(int tk_sta, int tk_end) {
 	  else op = i;
 	}
   }
-  printf("search op: %c", tokens[op].type);
+  printf("search op: %c\n", tokens[op].type);
   return op;
 }
 
@@ -207,7 +207,7 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
-  printf("end: %d", nr_token);
+  // printf("end: %d", nr_token);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
