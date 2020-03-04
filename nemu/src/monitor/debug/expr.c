@@ -91,7 +91,10 @@ static bool make_token(char *e) {
         switch (tokens[i].type) {
 		  case TK_NUM:
 		  {
-			strncpy(tokens[i].str, substr_start, substr_len);
+			int j;
+			for (j=position-substr_len; j<position; j++) {
+			  tokens[i].str[j-position+substr_len] = e[j];
+			}
 			printf("num: %s\n", tokens[i].str);
 		    break;
 		  }
