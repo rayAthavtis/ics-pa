@@ -145,13 +145,13 @@ static int cmd_p(char *args) {
   char s[32];
   bool *res=false;
   int nRet=sscanf(args, "%s", s);
-  printf("input: %s\n", s);
+  // printf("input: %s\n", s);
   if(nRet<=0) {
     printf("args error in cmd_p\n");
 	return 0;
   }
   expr(s, res);
-  printf("expr done\n");
+  // printf("expr done\n");
   return 0;
 }
 

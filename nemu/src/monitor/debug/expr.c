@@ -87,12 +87,12 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 		tokens[nr_token].type = rules[i].token_type;
-		printf("type: %d\n", tokens[nr_token].type);
+		// printf("type: %d\n", tokens[nr_token].type);
         switch (tokens[nr_token].type) {
 		  case TK_NUM:
 		  {
 			strncpy(tokens[nr_token].str, substr_start, substr_len);
-			printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
+			// printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 		    break;
 		  }
 		  case '+':
@@ -115,8 +115,10 @@ static bool make_token(char *e) {
 			printf("/\n");
 			break;
 		  }
-		  default: 
+		  default:
+		  { 
 			printf("token type: %d\n", tokens[nr_token].type);
+		  }
         }
 		nr_token++;
         break;
@@ -134,7 +136,7 @@ static bool make_token(char *e) {
 
 static bool ck_prt(int lp, int rp) {
   if (tokens[lp].type == TK_LP && tokens[rp].type == TK_RP) {
-    printf("a pair of prt\n");
+    // printf("a pair of prt\n");
 	return true;
   }
   return false;
@@ -156,7 +158,7 @@ static int search_dmtop(int tk_sta, int tk_end) {
 	  else op = i;
 	}
   }
-  printf("search op: %c\n", tokens[op].type);
+  // printf("search op: %c\n", tokens[op].type);
   return op;
 }
 
@@ -168,10 +170,9 @@ static int make_prase(int tk_sta, int tk_end) {
     return 0;
   }
   else if (tk_sta == tk_end) {
-	printf("pos: %d\n", tk_sta);
-	printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
+	// printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
   	sscanf(tokens[tk_sta].str, "%d", &val1);
-	printf("val: %d\n", val1);
+	// printf("val: %d\n", val1);
 	return val1;
   }
   else if (ck_prt(tk_sta, tk_end) == true) {
@@ -179,7 +180,7 @@ static int make_prase(int tk_sta, int tk_end) {
   }
   else {
 	op = search_dmtop(tk_sta, tk_end);
-	printf("op_pos: %d\n", op);
+	// printf("op_pos: %d\n", op);
 	val1 = make_prase(tk_sta, op - 1);
 	val2 = make_prase(op + 1, tk_end);
 	switch (tokens[op].type) {
@@ -193,7 +194,7 @@ static int make_prase(int tk_sta, int tk_end) {
 		return val1 / val2;
 	  default:
 	  {
-		printf("defalt end\n");
+		printf("error yet\n");
 		return 0;
 	  }
 	}
