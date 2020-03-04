@@ -162,6 +162,10 @@ static int search_dmtop(int tk_sta, int tk_end) {
 static int make_prase(int tk_sta, int tk_end) {
   int op;
   int val1, val2;
+  int i;
+  for (i=0; i<nr_token-1; i++) {
+    printf("look: %d, %s\n", tokens[i].type, tokens[i].str);
+  }
   if (tk_sta > tk_end) {
 	printf("make_prase wrong in eval\n");
     return 0;
