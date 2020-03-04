@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_LP, TK_RP
+  TK_NOTYPE = 256, TK_EQ, TK_LP, TK_RP, TK_NUM
 
   /* TODO: Add more token types */
 
@@ -30,7 +30,8 @@ static struct rule {
   {"/", '/'},
   {"\\(", TK_LP},
   {"\\)", TK_RP},
-  {"=", '='}
+  {"=", '='},
+  {"[1-9][0-9]*|0", TK_NUM}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -87,6 +88,12 @@ static bool make_token(char *e) {
          */
 		tokens[i].type = rules[i].token_type;
         switch (rules[i].token_type) {
+		  case TK_NUM:
+		  {
+			// tokens[i].str = rules[i].regex;
+			printf("num: %s\n", tokens[i].str);
+			return true;
+		  }
 		  case '+':
 		  {
 			printf("+++++++\n");
