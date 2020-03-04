@@ -167,6 +167,7 @@ static int make_prase(int tk_sta, int tk_end) {
     return 0;
   }
   else if (tk_sta == tk_end) {
+	printf("pos: %d\n", tk_sta);
 	printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
   	sscanf(tokens[tk_sta].str, "%d", &val1);
 	printf("val: %d\n", val1);
@@ -177,6 +178,7 @@ static int make_prase(int tk_sta, int tk_end) {
   }
   else {
 	op = search_dmtop(tk_sta, tk_end);
+	printf("op_pos: %d\n", op);
 	val1 = make_prase(tk_sta, op - 1);
 	val2 = make_prase(op + 1, tk_end);
 	switch (tokens[op].type) {
