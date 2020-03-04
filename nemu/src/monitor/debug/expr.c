@@ -164,7 +164,7 @@ static int make_prase(int tk_sta, int tk_end) {
   int val1, val2;
   int i;
   for (i=0; i<nr_token-1; i++) {
-    printf("look: %d, %s\n", tokens[i].type, tokens[i].str);
+    printf("look: %d %s\n", tokens[i].type, tokens[i].str);
   }
   if (tk_sta > tk_end) {
 	printf("make_prase wrong in eval\n");
@@ -214,6 +214,10 @@ uint32_t expr(char *e, bool *success) {
   // TODO();
 
   // printf("end: %d", nr_token);
+  int i;
+  for (i=0; i<nr_token; i++) {
+    printf("lllloook: %d %s\n", tokens[i].type, tokens[i].str);
+  }
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
