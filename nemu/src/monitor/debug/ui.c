@@ -42,9 +42,9 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
-static int cmd_x(char *args);
-
 static int cmd_p(char *args);
+
+static int cmd_x(char *args);
 
 static int cmd_w(char *args);
 
@@ -141,6 +141,20 @@ static int cmd_info(char *args) {
   return 0;
 }
 
+static int cmd_p(char *args) {
+  char s[32];
+  bool *res=false;
+  int nRet=sscanf(args, "%s", s);
+  if(nRet<=0) {
+    printf("args error in cmd_p\n");
+	return 0;
+  }
+  printf("result:\n");
+  expr(s, res);
+  printf("%d\n", *res);
+  return 0;
+}
+
 static int cmd_x(char *args) {
   int nLen=0;
   int i;
@@ -158,10 +172,6 @@ static int cmd_x(char *args) {
 	  printf("		0x%02x", vaddr_read(addr+i, 1));
   }
   printf("\n");
-  return 0;
-}
-
-static int cmd_p(char *args) {
   return 0;
 }
 
