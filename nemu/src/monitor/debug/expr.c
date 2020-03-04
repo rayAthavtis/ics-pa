@@ -65,6 +65,7 @@ int nr_token;
 static bool make_token(char *e) {
   int position = 0;
   int i;
+  // int val1, val2;
   regmatch_t pmatch;
 
   nr_token = 0;
@@ -84,17 +85,26 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+		tokens[i].type = rules[i].token_type;
         switch (rules[i].token_type) {
 		  case '+':
+		  {
+			printf("+++++++\n");
+			// sscanf(tokens[i-1].str, "%x", val1);
+			// sscanf(tokens[i+1].str, "%x", val2);
+			// printf("come to: %d + %d", val1, val2);
+			// tokens[i].str = val1 + val2;
+			// printf(" = %s\n", tokens[i].str);
 			return true;
+		  }
 		  case '-':
 			return true;
 		  case '*':
 			return true;
 		  case '/':
 			return true;
-		  default: assert(0);
+		  default: 
+			printf("token type: %d\n", rules[i].token_type);
         }
 
         break;
@@ -112,7 +122,8 @@ static bool make_token(char *e) {
 
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
-    *success = false;
+    printf("make_token error\n");
+	*success = false;
     return 0;
   }
 
