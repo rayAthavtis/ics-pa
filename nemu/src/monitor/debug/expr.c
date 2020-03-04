@@ -87,7 +87,8 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 		tokens[i].type = rules[i].token_type;
-        switch (rules[i].token_type) {
+		printf("type: %d\n", tokens[i].type);
+        switch (tokens[i].type) {
 		  case TK_NUM:
 		  {
 			strncpy(tokens[i].str, substr_start, substr_len);
@@ -162,10 +163,6 @@ static int search_dmtop(int tk_sta, int tk_end) {
 static int make_prase(int tk_sta, int tk_end) {
   int op;
   int val1, val2;
-  int i;
-  for (i=0; i<nr_token-1; i++) {
-    printf("look: %d %s\n", tokens[i].type, tokens[i].str);
-  }
   if (tk_sta > tk_end) {
 	printf("make_prase wrong in eval\n");
     return 0;
@@ -214,10 +211,6 @@ uint32_t expr(char *e, bool *success) {
   // TODO();
 
   // printf("end: %d", nr_token);
-  int i;
-  for (i=0; i<nr_token; i++) {
-    printf("lllloook: %d %s\n", tokens[i].type, tokens[i].str);
-  }
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
