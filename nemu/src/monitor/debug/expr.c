@@ -91,11 +91,8 @@ static bool make_token(char *e) {
         switch (tokens[i].type) {
 		  case TK_NUM:
 		  {
-			int j;
-			for (j=position-substr_len; j<position; j++) {
-			  tokens[i].str[j-position+substr_len] = e[j];
-			}
-			printf("num: %s\n", tokens[i].str);
+			strncpy(tokens[i].str, substr_start, substr_len);
+			printf("i: %d, num: %s\n", i, tokens[i].str);
 		    break;
 		  }
 		  case '+':
@@ -214,6 +211,7 @@ uint32_t expr(char *e, bool *success) {
   // TODO();
 
   // printf("end: %d", nr_token);
+  printf("tokens: 0:  %s\n", tokens[0].str);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
