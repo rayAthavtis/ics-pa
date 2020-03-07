@@ -147,6 +147,7 @@ static bool make_token(char *e) {
 static bool ck_prt(int lp, int rp) {
   int i;
   int ct=0;
+  printf("lp: %d, rp: %d\n", lp, rp);
   if (tokens[lp].type != TK_LP || tokens[rp].type != TK_RP)
 	return false;
   for (i=lp-1; i<rp; i++) {
@@ -157,13 +158,9 @@ static bool ck_prt(int lp, int rp) {
 	if (ct<0)
 	  return false;
   }
-  if (ct>0) {
-	printf("extra '(' in expr\n");
-	assert(0);
-  }
-  else if (ct<0) {
-    printf("extra ')' in expr\n");
-	assert(0);
+  if (ct!=0) {
+	printf("error in prt match\n");
+	return false;
   }
   return true;
 }
