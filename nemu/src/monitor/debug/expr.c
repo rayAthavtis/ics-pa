@@ -229,7 +229,8 @@ static int make_prase(int tk_sta, int tk_end) {
   vaddr_t addr;
   if (tk_sta > tk_end) {
 	printf("make_prase error in eval\n");
-    return 0;
+    assert(0);
+	// return 0;
   }
   else if (tk_sta == tk_end) {
 	// printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
@@ -328,7 +329,7 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
-  // printf("end: %d", nr_token);
+  printf("token num: %d", nr_token);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
