@@ -149,12 +149,12 @@ static bool ck_prt(int lp, int rp) {
   int ct=0;
   if (tokens[lp].type != TK_LP || tokens[rp].type != TK_RP)
 	return false;
-  for (i=lp; i<rp; i++) {
+  for (i=lp-1; i<rp; i++) {
     if (tokens[i].type == TK_LP)
 	  ct++;
 	else if(tokens[i].type == TK_RP)
 	  ct--;
-	if (ct<1)
+	if (ct<0)
 	  return false;
   }
   if (ct>0) {
