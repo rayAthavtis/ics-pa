@@ -97,8 +97,8 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		// if (substr_len>32)
-		  // assert(0);
+		if (substr_len>32)
+		  assert(0);
 		if (rules[i].token_type==TK_NOTYPE)
 		  break;
 		tokens[nr_token].type = rules[i].token_type;
@@ -159,8 +159,7 @@ static bool ck_prt(int lp, int rp) {
   }
   if (ct!=0) {
 	printf("error in prt match\n");
-	// assert(0);
-	return false;
+	assert(0);
   }
   return true;
 }
@@ -218,8 +217,7 @@ static int search_dmtop(int tk_sta, int tk_end) {
 	  return op[i];
   }
   printf("op error in search_domtop\n");
-  // assert(0);
-  return 0;
+  assert(0);
   // printf("search op: %c\n", tokens[op].type);
 }
 
@@ -229,8 +227,7 @@ static int make_prase(int tk_sta, int tk_end) {
   vaddr_t addr;
   if (tk_sta > tk_end) {
 	printf("make_prase error in eval\n");
-	// assert(0);
-	return 0;
+	assert(0);
   }
   else if (tk_sta == tk_end) {
 	// printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
@@ -255,11 +252,11 @@ static int make_prase(int tk_sta, int tk_end) {
 		  return cpu.eip;
 		else {
 		  printf("incorrect reg\n");
-		  // assert(0);
+		  assert(0);
 		}
 	}
-	printf("incorrect num\n");
-	return 0;
+	printf("incorrect arg\n");
+	assert(0);
   }
   else if (ck_prt(tk_sta, tk_end) == true) {
     return make_prase(tk_sta+1, tk_end-1);
@@ -314,8 +311,8 @@ static int make_prase(int tk_sta, int tk_end) {
 	  default:
 	  {
 		printf("error yet\n");
-		// assert(0);
-		return 0;
+		assert(0);
+		// return 0;
 	  }
 	}
   }
@@ -333,7 +330,7 @@ uint32_t expr(char *e, bool *success) {
 
   // printf("token num: %d\n", nr_token);
   int res = make_prase(0, nr_token-1);
+  *success = true;
   printf("result: %d\n", res);
-  printf("are you ok\n");
   return 0;
 }
