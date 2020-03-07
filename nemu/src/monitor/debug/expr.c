@@ -152,17 +152,18 @@ static bool ck_prt(int lp, int rp) {
 	  ct++;
 	else if(tokens[i].type == TK_RP)
 	  ct--;
-	if (ct<0) {
-	  printf("extra ')' in expr\n");
+	if (ct<1)
 	  return false;
-	}
   }
-  if (ct!=0) {
+  if (ct>0) {
 	printf("extra '(' in expr\n");
-	return false;
+	assert(0);
   }
-  else
-	return true;
+  else if (ct<0) {
+    printf("extra ')' in expr\n");
+	assert(0);
+  }
+  return true;
 }
 
 static int search_dmtop(int tk_sta, int tk_end) {
