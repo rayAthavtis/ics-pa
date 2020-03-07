@@ -107,7 +107,7 @@ static bool make_token(char *e) {
         switch (tokens[nr_token].type) {
 		  case TK_NUM:
 		    strncpy(tokens[nr_token].str, substr_start, substr_len);
-		    *(tokens[nr_token].str+substr_len)='\0';
+		    // *(tokens[nr_token].str+substr_len)='\0';
 		    // printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 			break;
 		  case TK_HEX:
@@ -119,11 +119,15 @@ static bool make_token(char *e) {
 		    *(tokens[nr_token].str+substr_len-1)='\0';
 			break;
 		  case '-':
-			if (tokens[nr_token-1].type != TK_NUM && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_RP)
+			if (nr_token==0)
+			  tokens[0].type = TK_NG;
+			else if (tokens[nr_token-1].type != TK_NUM && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_RP)
 			  tokens[nr_token].type = TK_NG;
 			break;
 		  case '*':
-			if (tokens[nr_token-1].type != TK_NUM && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_RP)
+			if (nr_token==0)
+			  tokens[0].type = TK_DEREF;
+			else if (tokens[nr_token-1].type != TK_NUM && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type != TK_REG && tokens[nr_token-1].type != TK_RP)
 			  tokens[nr_token].type = TK_DEREF;
 			break;
 		}
