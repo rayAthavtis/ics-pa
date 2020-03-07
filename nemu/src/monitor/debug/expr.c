@@ -252,7 +252,8 @@ static int make_prase(int tk_sta, int tk_end) {
 		  return val1;
 		}
 		printf("unknown id\n");
-		assert(0);
+		return 0;
+		// assert(0);
 	  case TK_NUM:
 		sscanf(tokens[tk_sta].str, "%d", &val1);
 		return val1;
