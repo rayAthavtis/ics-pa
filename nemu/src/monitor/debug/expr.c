@@ -43,7 +43,7 @@ static struct rule {
   {"=", '='},
   {"0x[1-9A-Fa-f][0-9A-Fa-f]*", TK_HEX},
   {"[1-9][0-9]*|0", TK_NUM},
-  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG}
+  // {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
