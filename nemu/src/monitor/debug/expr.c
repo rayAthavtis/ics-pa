@@ -97,10 +97,11 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		if (substr_len>32)
+		/* if (substr_len>32)
 		  assert(0);
 		if (rules[i].token_type==TK_NOTYPE)
 		  break;
+		 */
 		tokens[nr_token].type = rules[i].token_type;
 		// printf("type: %d\n", tokens[nr_token].type);
         switch (tokens[nr_token].type) {
@@ -139,7 +140,7 @@ static bool make_token(char *e) {
 
   return true;
 }
-
+/*
 static bool ck_prt(int lp, int rp) {
   int i;
   int ct=0;
@@ -311,7 +312,7 @@ static int make_prase(int tk_sta, int tk_end) {
 	  }
 	}
   }
-}
+}*/
 
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -324,8 +325,8 @@ uint32_t expr(char *e, bool *success) {
   // TODO();
 
   // printf("end: %d", nr_token);
-  int res = make_prase(0, nr_token-1);
-  printf("result: %d\n", res);
+  // int res = make_prase(0, nr_token-1);
+  // printf("result: %d\n", res);
   
   return 0;
 }
