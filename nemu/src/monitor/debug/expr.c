@@ -147,6 +147,8 @@ static bool make_token(char *e) {
 static bool ck_prt(int lp, int rp) {
   int i;
   int ct=0;
+  if (tokens[lp].type != TK_LP || tokens[rp].type != TK_RP)
+	return false;
   for (i=lp; i<rp; i++) {
     if (tokens[i].type == TK_LP)
 	  ct++;
@@ -329,7 +331,7 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
-  printf("token num: %d", nr_token);
+  printf("token num: %d\n", nr_token);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
   
