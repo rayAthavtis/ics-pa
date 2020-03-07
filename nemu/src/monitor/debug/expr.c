@@ -171,7 +171,7 @@ static bool ck_prt(int lp, int rp) {
 static int search_dmtop(int tk_sta, int tk_end) {
   int i;
   int fl=0;
-  int op[8]={-1,-1,-1,-1,-1, -1};
+  int op[8]={-1,-1,-1,-1,-1, -1, -1, -1};
   for (i=tk_sta; i<tk_end; i++) {
     if (tokens[i].type != TK_NUM) {
 	  if (tokens[i].type == TK_RP)
