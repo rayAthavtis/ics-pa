@@ -143,7 +143,7 @@ static int cmd_info(char *args) {
 
 static int cmd_p(char *args) {
   // char s[32];
-  bool *res=false;
+  bool res=false;
   /*
   int nRet=sscanf(args, "%s", s);
   if (nRet<=0) {
@@ -151,8 +151,8 @@ static int cmd_p(char *args) {
 	return 0;
   }
    */
-  expr(args, res);
-  if (*res==false)
+  expr(args, &res);
+  if (res==false)
 	  printf("cal error in cmd_p\n");
   printf("expr done\n");
   return 0;
