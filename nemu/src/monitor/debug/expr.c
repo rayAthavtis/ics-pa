@@ -7,7 +7,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_GE, TK_LE, TK_NEQ, TK_AND, TK_OR, TK_LP, TK_RP, TK_NUM, TK_HEX, TK_REG, TK_NG, TK_DEREF
+  TK_NOTYPE = 256, TK_EQ, TK_GE, TK_LE, TK_NEQ, TK_AND, TK_OR, TK_LP, TK_RP, TK_NUM, TK_HEX, TK_REG, TK_ID, TK_NG, TK_DEREF
 
   /* TODO: Add more token types */
 
@@ -43,7 +43,8 @@ static struct rule {
   {"=", '='},
   {"0x([1-9A-Fa-f][0-9A-Fa-f]*|0)", TK_HEX},
   {"[1-9][0-9]*|0", TK_NUM},
-  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG}
+  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG},
+  {"[_A-Za-z][_0-9A-Za-z]*", TK_ID}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -75,12 +76,21 @@ typedef struct token {
 Token tokens[32];
 int nr_token;
 
+typedef struct idbox {
+  char name[32];
+  char str[32];
+} Idbox;
+
+Idbox m_idbox[32];
+int nr_id;
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
 
   nr_token = 0;
+  nr_id = 0;
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -103,7 +113,8 @@ static bool make_token(char *e) {
 		  break;
 		tokens[nr_token].type = rules[i].token_type;
 		// printf("type: %d\n", tokens[nr_token].type);
-        switch (tokens[nr_token].type) {
+		switch (tokens[nr_token].type) {
+		  case TK_ID:
 		  case TK_NUM:
 		    strncpy(tokens[nr_token].str, substr_start, substr_len);
 		    *(tokens[nr_token].str+substr_len)='\0';
@@ -224,6 +235,8 @@ static int search_dmtop(int tk_sta, int tk_end) {
 static int make_prase(int tk_sta, int tk_end) {
   int op;
   int val1, val2;
+  int i;
+  int fl=0;
   vaddr_t addr;
   if (tk_sta > tk_end) {
 	printf("make_prase error in eval\n");
@@ -231,8 +244,15 @@ static int make_prase(int tk_sta, int tk_end) {
   }
   else if (tk_sta == tk_end) {
 	// printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
-  	int i;
 	switch (tokens[tk_sta].type) {
+	  case TK_ID:
+		for (i=0; i<nr_id; i++) {
+		  if (strcmp(m_idbox[i].name, tokens[tk_sta].str)==0)
+			sscanf(m_idbox[i].str, "%d", &val1);
+		  return val1;
+		}
+		printf("unknown id\n");
+		assert(0);
 	  case TK_NUM:
 		sscanf(tokens[tk_sta].str, "%d", &val1);
 		return val1;
@@ -291,7 +311,18 @@ static int make_prase(int tk_sta, int tk_end) {
 	  case '/':
 		return val1 / val2;
 	  case '=':
-		return val1=val2;
+		for (i=0; i<nr_id; i++) {
+		  if (strcmp(m_idbox[i].name, tokens[op-1].str)==0) {
+			fl=1;
+			break;
+		  }
+		}
+		if (fl==0)
+		  strncpy(m_idbox[i].name, tokens[op-1].str, sizeof(tokens[op-1].str));
+		nr_id++;
+		snprintf(m_idbox[i].str, sizeof(m_idbox[i].str), "%d", val2);
+		printf("name: %s, value: %d, %s", m_idbox[i].name, val2, m_idbox[i].str);
+		return val2;
 	  case '>':
 		return val1>val2;
 	  case '<':
