@@ -106,16 +106,16 @@ static bool make_token(char *e) {
         switch (tokens[nr_token].type) {
 		  case TK_NUM:
 		    strncpy(tokens[nr_token].str, substr_start, substr_len);
-		    *(tokens[nr_token].str+substr_len)='\0';
+		    // *(tokens[nr_token].str+substr_len)='\0';
 		    // printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 			break;
 		  case TK_HEX:
 		    strncpy(tokens[nr_token].str, substr_start + 2, substr_len - 2);
-		    *(tokens[nr_token].str+substr_len-2)='\0';
+		    // *(tokens[nr_token].str+substr_len-2)='\0';
 		    break;
 		  case TK_REG:
 		    strncpy(tokens[nr_token].str, substr_start + 1, substr_len -1);
-		    *(tokens[nr_token].str+substr_len-1)='\0';
+		    // *(tokens[nr_token].str+substr_len-1)='\0';
 			break;
 		  case '-':
 			if (nr_token==0)
@@ -147,7 +147,6 @@ static bool make_token(char *e) {
 static bool ck_prt(int lp, int rp) {
   int i;
   int ct=0;
-  printf("lp: %d, rp: %d\n", lp, rp);
   if (tokens[lp].type != TK_LP || tokens[rp].type != TK_RP)
 	return false;
   for (i=lp+1; i<rp; i++) {
@@ -160,7 +159,7 @@ static bool ck_prt(int lp, int rp) {
   }
   if (ct!=0) {
 	printf("error in prt match\n");
-	return false;
+	assert(0);
   }
   return true;
 }
@@ -169,7 +168,7 @@ static int search_dmtop(int tk_sta, int tk_end) {
   int i;
   int fl=0;
   int op[8]={-1,-1,-1,-1,-1, -1, -1, -1};
-  for (i=tk_sta; i<tk_end; i++) {
+  for (i=tk_sta; i<=tk_end; i++) {
     if (tokens[i].type != TK_NUM) {
 	  if (tokens[i].type == TK_RP)
 	    fl--;
