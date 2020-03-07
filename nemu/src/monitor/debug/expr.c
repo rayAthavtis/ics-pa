@@ -369,6 +369,6 @@ uint32_t expr(char *e, bool *success) {
   // printf("token num: %d\n", nr_token);
   int res = make_prase(0, nr_token-1);
   *success = true;
-  printf("result: %d\n", res);
-  return 0;
+ 
+  return res;
 }

@@ -143,7 +143,7 @@ static int cmd_info(char *args) {
 
 static int cmd_p(char *args) {
   // char s[32];
-  bool res=false;
+  bool success=false;
   /*
   int nRet=sscanf(args, "%s", s);
   if (nRet<=0) {
@@ -151,9 +151,10 @@ static int cmd_p(char *args) {
 	return 0;
   }
    */
-  expr(args, &res);
-  if (res==false)
+  int res=expr(args, &success);
+  if (success==false)
 	  printf("cal error in cmd_p\n");
+  printf("result: %d\n", res);
   // printf("expr done\n");
   return 0;
 }
@@ -162,11 +163,14 @@ static int cmd_x(char *args) {
   int nLen=0;
   int i;
   vaddr_t addr;
-  int nRet=sscanf(args, "%d		0x%x", &nLen, &addr);
+  bool success=false;
+  char exp[32];
+  int nRet=sscanf(args, "%d	%s", &nLen, exp);
   if (nRet<=0) {
     printf("args error in cmd_x\n");
 	return 0;
   }
+  addr=expr(exp, &success);
   printf("Memory:\n");
   for (i=0; i<nLen; i++) {
     if (i%4==0)
