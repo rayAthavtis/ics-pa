@@ -154,7 +154,7 @@ static int cmd_p(char *args) {
   expr(args, res);
   if (*res==false)
 	  printf("cal error in cmd_p\n");
-  // printf("expr done\n");
+  printf("expr done\n");
   return 0;
 }
 
