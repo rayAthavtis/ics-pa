@@ -149,7 +149,7 @@ static int cmd_p(char *args) {
     printf("args error in cmd_p\n");
 	return 0;
   }
-  expr(args, res);
+  expr("12", res);
   if (*res==false)
 	  printf("cal error in cmd_p\n");
   // printf("expr done\n");
