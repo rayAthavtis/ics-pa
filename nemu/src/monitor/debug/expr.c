@@ -97,8 +97,8 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-		if (substr_len>32)
-		  assert(0);
+		// if (substr_len>32)
+		  // assert(0);
 		if (rules[i].token_type==TK_NOTYPE)
 		  break;
 		tokens[nr_token].type = rules[i].token_type;
@@ -106,16 +106,16 @@ static bool make_token(char *e) {
         switch (tokens[nr_token].type) {
 		  case TK_NUM:
 		    strncpy(tokens[nr_token].str, substr_start, substr_len);
-		    // *(tokens[nr_token].str+substr_len)='\0';
+		    *(tokens[nr_token].str+substr_len)='\0';
 		    // printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 			break;
 		  case TK_HEX:
 		    strncpy(tokens[nr_token].str, substr_start + 2, substr_len - 2);
-		    // *(tokens[nr_token].str+substr_len-2)='\0';
+		    *(tokens[nr_token].str+substr_len-2)='\0';
 		    break;
 		  case TK_REG:
 		    strncpy(tokens[nr_token].str, substr_start + 1, substr_len -1);
-		    // *(tokens[nr_token].str+substr_len-1)='\0';
+		    *(tokens[nr_token].str+substr_len-1)='\0';
 			break;
 		  case '-':
 			if (nr_token==0)
@@ -159,7 +159,8 @@ static bool ck_prt(int lp, int rp) {
   }
   if (ct!=0) {
 	printf("error in prt match\n");
-	assert(0);
+	// assert(0);
+	return false;
   }
   return true;
 }
@@ -167,7 +168,7 @@ static bool ck_prt(int lp, int rp) {
 static int search_dmtop(int tk_sta, int tk_end) {
   int i;
   int fl=0;
-  int op[8]={-1,-1,-1,-1,-1, -1, -1, -1};
+  int op[8]={-1, -1, -1, -1, -1, -1, -1, -1};
   for (i=tk_sta; i<=tk_end; i++) {
     if (tokens[i].type != TK_NUM) {
 	  if (tokens[i].type == TK_RP)
@@ -217,7 +218,8 @@ static int search_dmtop(int tk_sta, int tk_end) {
 	  return op[i];
   }
   printf("op error in search_domtop\n");
-  assert(0);
+  // assert(0);
+  return 0;
   // printf("search op: %c\n", tokens[op].type);
 }
 
@@ -227,8 +229,8 @@ static int make_prase(int tk_sta, int tk_end) {
   vaddr_t addr;
   if (tk_sta > tk_end) {
 	printf("make_prase error in eval\n");
-    assert(0);
-	// return 0;
+	// assert(0);
+	return 0;
   }
   else if (tk_sta == tk_end) {
 	// printf("type: %d, value: %s\n", tokens[tk_sta].type, tokens[tk_sta].str);
@@ -236,10 +238,10 @@ static int make_prase(int tk_sta, int tk_end) {
 	switch (tokens[tk_sta].type) {
 	  case TK_NUM:
 		sscanf(tokens[tk_sta].str, "%d", &val1);
-		break;
+		return val1;
 	  case TK_HEX:
 		sscanf(tokens[tk_sta].str, "%x", &val1);
-	    break;
+	    return val1;
 	  case TK_REG:
 		for (i=0; i<8; i++) {
 		  if (strcmp(tokens[tk_sta].str, regsl[i])==0)
@@ -251,19 +253,20 @@ static int make_prase(int tk_sta, int tk_end) {
 		}
 		if (strcmp(tokens[tk_sta].str, "eip")==0)
 		  return cpu.eip;
-		else
+		else {
 		  printf("incorrect reg\n");
-		assert(0);
+		  // assert(0);
+		}
 	}
-	// printf("val: %d\n", val1);
-	return val1;
+	printf("incorrect num\n");
+	return 0;
   }
   else if (ck_prt(tk_sta, tk_end) == true) {
     return make_prase(tk_sta+1, tk_end-1);
   }
   else {
 	op = search_dmtop(tk_sta, tk_end);
-	printf("op_pos: %d\n", op);
+	// printf("op_pos: %d\n", op);
 	if (tokens[op].type == '!') {
 	  val1 = make_prase(tk_sta + 1, tk_end);
 	  if (val1==0)
@@ -311,7 +314,8 @@ static int make_prase(int tk_sta, int tk_end) {
 	  default:
 	  {
 		printf("error yet\n");
-		assert(0);
+		// assert(0);
+		return 0;
 	  }
 	}
   }
@@ -327,9 +331,9 @@ uint32_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   // TODO();
 
-  printf("token num: %d\n", nr_token);
+  // printf("token num: %d\n", nr_token);
   int res = make_prase(0, nr_token-1);
   printf("result: %d\n", res);
-  
+  printf("are you ok\n");
   return 0;
 }
