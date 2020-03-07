@@ -106,7 +106,7 @@ static bool make_token(char *e) {
         switch (tokens[nr_token].type) {
 		  case TK_NUM:
 		    strncpy(tokens[nr_token].str, substr_start, substr_len);
-		    // *(tokens[nr_token].str+substr_len)='\0';
+		    *(tokens[nr_token].str+substr_len)='\0';
 		    // printf("i: %d, num: %s\n", nr_token, tokens[nr_token].str);
 			break;
 		  case TK_HEX:
