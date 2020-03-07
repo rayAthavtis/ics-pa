@@ -267,7 +267,7 @@ static int make_prase(int tk_sta, int tk_end) {
   }
   else {
 	op = search_dmtop(tk_sta, tk_end);
-	// printf("op_pos: %d\n", op);
+	printf("op_pos: %d\n", op);
 	if (tokens[op].type == '!') {
 	  val1 = make_prase(tk_sta + 1, tk_end);
 	  if (val1==0)
