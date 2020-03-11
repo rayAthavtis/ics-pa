@@ -134,7 +134,8 @@ static int cmd_info(char *args) {
 	return 0;
   }
   if (s=='w') {
-	printf("arg 'w' not finished yet\n");
+	// printf("arg 'w' not finished yet\n");
+	print_wp();
 	return 0;
   }
   printf("args error in cmd_info\n");
@@ -151,6 +152,7 @@ static int cmd_p(char *args) {
 	return 0;
   }
    */
+  printf("args: %s\n", args);
   int res=expr(args, &success);
   if (success==false)
 	  printf("cal error in cmd_p\n");
@@ -184,10 +186,21 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_w(char *args) {
+  bool success = false;
+  int val = expr(args, &success);
+  WP *wp = new_wp(args, val);
+  printf("wp: %d	%s	0x%08x\n", wp->NO, wp->expr, wp->val);
   return 0;
 }
 
 static int cmd_d(char *args) {
+  int no;
+  int nRet=sscanf(args, "%d", &no);
+  if (nRet<=0) {
+    printf("args error in cmd_d\n");
+	return 0;
+  }
+  free_wp(no);
   return 0;
 }
 
