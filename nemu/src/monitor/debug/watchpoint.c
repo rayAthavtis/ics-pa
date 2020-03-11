@@ -35,12 +35,16 @@ WP* new_wp(char *str, int val) {
 	assert(0);
   }
   else {
+	int i;
 	printf("set wp:\n");
 	wp = free_;
     free_ = free_->next;
 	wp->next = NULL;
 	printf("expr: %s\n", str);
-	strcpy(wp->expr, str);
+	// strncpy(wp->expr, str, sizeof(str));
+	for (i=0; str[i]!='\0'; i++)
+	  wp->expr[i] = str[i];
+	wp->expr[i] = '\0';
 	printf("iexpr: %s", wp->expr);
 	wp->val = val;
 	printf("val: %d", wp->val);
