@@ -125,12 +125,12 @@ static int cmd_info(char *args) {
   if (s=='r') {  /* print regs */
     int i;
 	for (i=0; i<8; i++)  /* 32bit */
-	  printf("%s		0x%x\n", regsl[i], reg_l(i));
+	  printf("%s		0x%08x\n", regsl[i], reg_l(i));
 	printf("eip		0x%x\n", cpu.eip);
 	for (i=0; i<8; i++)  /* 16bit */
-      printf("%s		0x%x\n", regsw[i], reg_w(i));
+      printf("%s		0x%04x\n", regsw[i], reg_w(i));
 	for (i=0; i<8; i++)  /* 8bit */
-	  printf("%s		0x%x\n", regsb[i], reg_b(i));
+	  printf("%s		0x%02x\n", regsb[i], reg_b(i));
 	return 0;
   }
   if (s=='w') {
@@ -176,7 +176,7 @@ static int cmd_x(char *args) {
   nLen*=4;
   for (i=0; i<nLen; i+=4) {
     // if (i%4==0)
-	printf("\n0x%x:		0x%02x", addr+i, vaddr_read(addr+i, 4));
+	printf("\n0x%x:		0x%08x", addr+i, vaddr_read(addr+i, 4));
 	// else
 	  // printf("		0x%02x", vaddr_read(addr+i, 4));
   }
