@@ -92,6 +92,24 @@ void free_wp(int no) {
   }
 }
 
+bool check_wp() {
+  WP *wp;
+  int val=0;
+  bool success=false;
+  if (head==NULL)
+	return true;
+  for (wp=head; wp->next!=NULL; wp=wp->next) {
+    val = expr(wp->expr, &success);
+	if (success==false) {
+	  printf("error in expr\n");
+	  assert(0);
+	}
+	if (wp->val!=val)
+	  return false;
+  }
+  return true;
+} 
+
 void print_wp() {
   WP *wp;
   if (head==NULL) {
