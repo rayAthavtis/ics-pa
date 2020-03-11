@@ -187,7 +187,7 @@ static int cmd_x(char *args) {
 static int cmd_w(char *args) {
   bool success = false;
   int val = expr(args, &success);
-  printf("val: %d\n", val);
+  // printf("val: %d\n", val);
   WP *wp = new_wp(args, val);
   printf("wp: %d	%s	0x%08x\n", wp->NO, wp->expr, wp->val);
   return 0;

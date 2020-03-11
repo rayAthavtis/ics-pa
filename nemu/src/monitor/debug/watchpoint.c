@@ -110,7 +110,7 @@ bool check_wp() {
 	  assert(0);
 	}
 	if (wp->val!=val) {
-	  printf("value changed\n");
+	  // printf("value changed\n");
 	  return false;
 	}
 	// printf("wp%d true\n", wp->NO);
