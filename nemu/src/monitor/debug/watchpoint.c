@@ -98,8 +98,10 @@ bool check_wp() {
   int val=0;
   bool success=false;
   printf("check wp\n");
-  if (head==NULL)
+  if (head==NULL) {
+	printf("no wp, return true\n");
 	return true;
+  }
   for (wp=head; wp->next!=NULL; wp=wp->next) {
     printf("wp->expr: %s, oval: %d, ", wp->expr, wp->val);
 	val = expr(wp->expr, &success);
