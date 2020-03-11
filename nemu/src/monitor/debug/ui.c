@@ -152,10 +152,9 @@ static int cmd_p(char *args) {
 	return 0;
   }
    */
-  printf("args: %s\n", args);
   int res=expr(args, &success);
   if (success==false)
-	  printf("cal error in cmd_p\n");
+	printf("cal error in cmd_p\n");
   printf("result: %d\n", res);
   // printf("expr done\n");
   return 0;
@@ -188,6 +187,7 @@ static int cmd_x(char *args) {
 static int cmd_w(char *args) {
   bool success = false;
   int val = expr(args, &success);
+  printf("val: %d\n", val);
   WP *wp = new_wp(args, val);
   printf("wp: %d	%s	0x%08x\n", wp->NO, wp->expr, wp->val);
   return 0;

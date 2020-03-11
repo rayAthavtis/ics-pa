@@ -12,6 +12,8 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
+	wp_pool[i].val = 0;
+	wp_pool[i].is_on = false;
   }
   wp_pool[NR_WP - 1].next = NULL;
 
@@ -33,6 +35,7 @@ WP* new_wp(char *str, int val) {
 	assert(0);
   }
   else {
+	printf("set wp:\n");
 	wp = free_;
     free_ = free_->next;
 	wp->next = NULL;
