@@ -101,8 +101,7 @@ bool check_wp() {
 	printf("no wp, return true\n");
 	return true;
   }
-  for (wp=head; wp->next!=NULL; wp=wp->next) {
-	printf("check wp:\n");
+  for (wp=head; wp!=NULL; wp=wp->next) {
     printf("wp->expr: %s, oval: %d, ", wp->expr, wp->val);
 	val = expr(wp->expr, &success);
 	printf("val: %d\n", val);
