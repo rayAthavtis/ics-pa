@@ -42,7 +42,8 @@ WP* new_wp(char *str, int val) {
 	strcpy(wp->expr, str);
 	// printf("iexpr: %s\n", wp->expr);
 	wp->val = val;
-	wp->is_on = true;
+	// if (==)
+	  // wp->is_on = true;
 	if (head==NULL)
 	  head = wp;
 	else {
