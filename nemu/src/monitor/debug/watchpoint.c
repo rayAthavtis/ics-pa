@@ -42,8 +42,9 @@ WP* new_wp(char *str, int val) {
 	strcpy(wp->expr, str);
 	// printf("iexpr: %s\n", wp->expr);
 	wp->val = val;
-	// if (==)
-	  // wp->is_on = true;
+	if (str[0]=='$' && str[1]=='e'&& str[2]=='i' && str[3]=='p'
+			&& str[4]=='=' && str[5]=='=')
+	  wp->is_on = true;
 	if (head==NULL)
 	  head = wp;
 	else {
