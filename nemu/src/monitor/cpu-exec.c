@@ -31,7 +31,7 @@ void cpu_exec(uint64_t n) {
     /* TODO: check watchpoints here. */
 	extern bool check_wp();
 	if (check_wp()==false) {
-	  printf("nemu stopped/n");
+	  printf("nemu stopped\n");
 	  nemu_state = NEMU_STOP;
 	}
 
