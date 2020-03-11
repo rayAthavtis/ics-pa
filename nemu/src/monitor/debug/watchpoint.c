@@ -39,13 +39,19 @@ WP* new_wp(char *str, int val) {
 	wp = free_;
     free_ = free_->next;
 	wp->next = NULL;
-	strcpy(head->expr, str);
+	printf("expr: %s\n", str);
+	strcpy(wp->expr, str);
+	printf("iexpr: %s", wp->expr);
 	wp->val = val;
-	if (head==NULL)
+	printf("val: %d", wp->val);
+	if (head==NULL) {
 	  head = wp;
+	  printf("head: %d\n", head->val);
+	}
 	else {
 	  wp->next = head;
 	  head = wp;
+	  printf("head: %d\n", head->val);
 	}
 	printf("wp set ok\n");
 	return wp;
