@@ -9,7 +9,7 @@ typedef struct watchpoint {
 
   /* TODO: Add more members if necessary */
   int val;
-  char *expr;
+  char expr[32];
   bool is_on;
 
 } WP;
