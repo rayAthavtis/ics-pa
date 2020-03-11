@@ -97,6 +97,7 @@ bool check_wp() {
   WP *wp;
   int val=0;
   bool success=false;
+  printf("check wp\n");
   if (head==NULL)
 	return true;
   for (wp=head; wp->next!=NULL; wp=wp->next) {
@@ -105,8 +106,10 @@ bool check_wp() {
 	  printf("error in expr\n");
 	  assert(0);
 	}
-	if (wp->val!=val)
+	if (wp->val!=val) {
+	  printf("value changed\n");
 	  return false;
+	}
   }
   return true;
 } 
