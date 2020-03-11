@@ -35,28 +35,19 @@ WP* new_wp(char *str, int val) {
 	assert(0);
   }
   else {
-	// int i;
-	printf("set wp:\n");
 	wp = free_;
     free_ = free_->next;
 	wp->next = NULL;
-	printf("expr: %s\n", str);
+	// printf("expr: %s\n", str);
 	strcpy(wp->expr, str);
-	// for (i=0; str[i]!='\0'; i++)
-	  // wp->expr[i] = str[i];
-	// wp->expr[i] = '\0';
-	printf("iexpr: %s", wp->expr);
+	// printf("iexpr: %s\n", wp->expr);
 	wp->val = val;
-	printf("val: %d", wp->val);
 	wp->is_on = true;
-	if (head==NULL) {
+	if (head==NULL)
 	  head = wp;
-	  printf("head: %d\n", head->val);
-	}
 	else {
 	  wp->next = head;
 	  head = wp;
-	  printf("head: %d\n", head->val);
 	}
 	printf("wp set ok\n");
 	return wp;
