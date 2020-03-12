@@ -99,7 +99,7 @@ bool check_wp() {
   int val=0;
   bool success=false;
   if (head==NULL) {
-	printf("no wp, return true\n");
+	// printf("no wp, return true\n");
 	return true;
   }
   for (wp=head; wp!=NULL; wp=wp->next) {
