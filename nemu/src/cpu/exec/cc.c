@@ -41,7 +41,6 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
 	  rtl_get_SF(&t0);
 	  rtl_get_OF(&t1);
 	  rtl_get_ZF(&t3);
-	  printf("SF: %d, OF: %d, t2: %d, ZF: %d\n", t0, t1, t2, t3);
 	  *dest = t3 || (t0!=t1);
 	  break;
     default: panic("should not reach here");
