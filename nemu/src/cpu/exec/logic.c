@@ -109,7 +109,6 @@ make_EHelper(not) {
   print_asm_template1(not);
 }
 
-/*
 make_EHelper(rol) {
   rtl_shl(&t2, &id_dest->val, &id_src->val);
   t3 = 0;
@@ -126,4 +125,3 @@ make_EHelper(rol) {
 
   print_asm_template2(shl);
 }
-*/
