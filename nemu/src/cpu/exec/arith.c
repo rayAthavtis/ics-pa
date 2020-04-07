@@ -154,6 +154,7 @@ make_EHelper(sbb) {
 }
 
 make_EHelper(mul) {
+  printf("mul\n");
   rtl_lr(&t0, R_EAX, id_dest->width);
   rtl_mul(&t0, &t1, &id_dest->val, &t0);
 
@@ -178,6 +179,7 @@ make_EHelper(mul) {
 
 // imul with one operand
 make_EHelper(imul1) {
+  printf("imul1\n");
   rtl_lr(&t0, R_EAX, id_dest->width);
   rtl_imul(&t0, &t1, &id_dest->val, &t0);
 
@@ -202,6 +204,7 @@ make_EHelper(imul1) {
 
 // imul with two operands
 make_EHelper(imul2) {
+  printf("imul2\n");
   rtl_sext(&id_src->val, &id_src->val, id_src->width);
   rtl_sext(&id_dest->val, &id_dest->val, id_dest->width);
 
@@ -213,6 +216,7 @@ make_EHelper(imul2) {
 
 // imul with three operands
 make_EHelper(imul3) {
+  printf("imul3\n");
   rtl_sext(&id_src->val, &id_src->val, id_src->width);
   rtl_sext(&id_src2->val, &id_src2->val, id_src->width);
   rtl_sext(&id_dest->val, &id_dest->val, id_dest->width);
