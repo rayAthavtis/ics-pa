@@ -1,6 +1,9 @@
 #include <am.h>
 #include <x86.h>
 
+#define I8042_DATA_PORT 0x60
+#define I8042_STATUS_PORT 0x64
+
 #define RTC_PORT 0x48   // Note that this is not standard
 static unsigned long boot_time;
 
@@ -33,8 +36,8 @@ void _draw_sync() {
 
 int _read_key() {
   int ret = _KEY_NONE;
-  if (inb(0x64)) {
-    ret = inl(0x60);
+  if (inb(I8042_STATUS_PORT)) {
+    ret = inl(I8042_DATA_PORT);
   }
   return ret;
 }
