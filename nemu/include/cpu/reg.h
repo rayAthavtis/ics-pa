@@ -29,24 +29,23 @@ typedef struct {
    */
     struct {
       rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-	  union {
-	    rtlreg_t init;
-		struct {
-		  unsigned CF: 1;
-		  unsigned : 5;
-		  unsigned ZF: 1;
-		  unsigned SF: 1;
-		  unsigned : 1;
-		  unsigned IF: 1;
-		  unsigned : 1;
-		  unsigned OF: 1;
-		  unsigned : 20;
-		};
-	  }eflags;
     };
   };
   vaddr_t eip;
-
+  union {
+  	rtlreg_t init;
+	struct {
+	  unsigned CF: 1;
+	  unsigned : 5;
+	  unsigned ZF: 1;
+	  unsigned SF: 1;
+	  unsigned : 1;
+	  unsigned IF: 1;
+	  unsigned : 1;
+	  unsigned OF: 1;
+	  unsigned : 20;
+	};
+  }eflags;
 } CPU_state;
 
 extern CPU_state cpu;

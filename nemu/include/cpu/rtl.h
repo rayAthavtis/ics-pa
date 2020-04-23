@@ -185,18 +185,15 @@ static inline void rtl_msb(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- src1[width * 8 - 1]
   // TODO();
   rtl_shri(dest, src1, width*8-1);
-  // rtl_andi(dest, dest, 0x1);
+  rtl_andi(dest, dest, 0x1);
 }
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
   // TODO();
   rtl_shli(&t0, result, 32-width*8);
-  if (t0==0)
-	t1 = 1;
-  else
-  	t1 = 0;
-  rtl_set_ZF(&t1);
+  rtl_eq0(&t0, &t0);
+  rtl_set_ZF(&t0);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
