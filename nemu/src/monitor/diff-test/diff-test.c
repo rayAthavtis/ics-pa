@@ -161,6 +161,11 @@ void difftest_step(uint32_t eip) {
 		diff = true;
 	  }
   }
+  /* if (cpu.eflags!=r.eflags) {
+  	printf("eflags diff: NEMU->0x%08x, QEMU->0x%08x\n", cpu.eflags, r.eflags);
+	diff = true;
+  }
+  */
 
   if (diff) {
     nemu_state = NEMU_END;
