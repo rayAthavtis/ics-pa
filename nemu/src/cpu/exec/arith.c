@@ -59,7 +59,8 @@ make_EHelper(cmp) {
 
 make_EHelper(inc) {
   // TODO();
-  rtl_addi(&t2, &id_dest->val, 1);
+  // rtl_addi(&t2, &id_dest->val, 1);
+  t2 = id_dest->val + 1;
   operand_write(id_dest, &t2);
 
   rtl_update_ZFSF(&t2, id_dest->width);
@@ -73,7 +74,8 @@ make_EHelper(inc) {
 
 make_EHelper(dec) {
   // TODO();
-  rtl_subi(&t2, &id_dest->val, 1);
+  // rtl_subi(&t2, &id_dest->val, 1);
+  t2 = id_dest->val - 1;
   operand_write(id_dest, &t2);
 
   rtl_update_ZFSF(&t2, id_dest->width);
