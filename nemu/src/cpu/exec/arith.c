@@ -96,7 +96,7 @@ make_EHelper(neg) {
 	rtl_set_CF(&t0);
   }
 
-  rtl_sub(&t0, &tzero, &id_dest->val); /* ? */
+  rtl_sub(&t0, &tzero, &id_dest->val);
   operand_write(id_dest, &t0);
 
   rtl_update_ZFSF(&t0, id_dest->width);
