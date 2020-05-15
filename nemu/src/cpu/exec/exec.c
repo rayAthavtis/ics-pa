@@ -136,7 +136,7 @@ opcode_entry opcode_table [512] = {
   /* 0xc0 */	IDEXW(gp2_Ib2E, gp2, 1), IDEX(gp2_Ib2E, gp2), IDEXW(I, ret, 2), EX(ret), /* EMPTY, EMPTY, */
   /* 0xc4 */	EMPTY, EMPTY, IDEXW(mov_I2E, mov, 1), IDEX(mov_I2E, mov),
   /* 0xc8 */	EMPTY, EX(leave), EMPTY, EMPTY, /* EMPTY, EMPTY, EMPTY, EMPTY, */
-  /* 0xcc */	EMPTY, IDEXW(I, int, 1), EMPTY, EMPTY, /* EMPTY, EMPTY, EMPTY, EMPTY, */
+  /* 0xcc */	EMPTY, IDEXW(I, int, 1), EMPTY, EX(iret), /* EMPTY, EMPTY, EMPTY, EMPTY, */
   /* 0xd0 */	IDEXW(gp2_1_E, gp2, 1), IDEX(gp2_1_E, gp2), IDEXW(gp2_cl2E, gp2, 1), IDEX(gp2_cl2E, gp2),
   /* 0xd4 */	EMPTY, EMPTY, EX(nemu_trap), EMPTY,
   /* 0xd8 */	EMPTY, EMPTY, EMPTY, EMPTY,
@@ -144,7 +144,7 @@ opcode_entry opcode_table [512] = {
   /* 0xe0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xe4 */	IDEXW(in_I2a, in, 1), IDEX(in_I2a, in), IDEXW(out_a2I, out, 1), IDEX(out_a2I, out), /* EMPTY, EMPTY, EMPTY, EMPTY, */
   /* 0xe8 */	IDEXW(J, call, 0), IDEX(J, jmp), IDEX(J, jmp), IDEXW(J, jmp, 1), /* EMPTY, EMPTY, EMPTY, EMPTY, */
-  /* 0xec */	IDEXW(in_dx2a, in, 1), IDEX(in_dx2a, in), IDEXW(out_a2dx, out, 1), IDEX(out_a2dx, out), /* EMPTY, EMPTY, EMPTY, EMPTY, */
+ /* 0xec */	IDEXW(in_dx2a, in, 1), IDEX(in_dx2a, in), IDEXW(out_a2dx, out, 1), IDEX(out_a2dx, out), /* EMPTY, EMPTY, EMPTY, EMPTY, */
   /* 0xf0 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xf4 */	EMPTY, EMPTY, IDEXW(E, gp3, 1), IDEX(E, gp3),
   /* 0xf8 */	EMPTY, EMPTY, EMPTY, EMPTY,
