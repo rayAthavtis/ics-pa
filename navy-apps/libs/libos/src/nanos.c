@@ -11,6 +11,8 @@
 
 // FIXME: this is temporary
 
+intptr_t program_break = (intptr_t) &_end;
+
 int _syscall_(int type, uintptr_t a0, uintptr_t a1, uintptr_t a2){
   int ret = -1;
   asm volatile("int $0x80": "=a"(ret): "a"(type), "b"(a0), "c"(a1), "d"(a2));
@@ -31,6 +33,13 @@ int _write(int fd, void *buf, size_t count){
 }
 
 void *_sbrk(intptr_t increment){
+  // return (void *)-1;
+  intptr_t pre_prob = program_break;
+  intptr_t new_prob = pre_prob + increment;
+  if (_syscall_(SYS_brk, new_prob, 0, 0)==0) {
+    program_break = new_prob;
+	return (void *)pre_prob;
+  }
   return (void *)-1;
 }
 
