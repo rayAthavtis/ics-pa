@@ -1,6 +1,8 @@
 #include "common.h"
 #include "syscall.h"
 
+extern char _end;
+
 uintptr_t sys_none() {
   return 1;
 }
