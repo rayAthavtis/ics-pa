@@ -31,7 +31,7 @@ void init_fs() {
 
 size_t fs_filesz(int fd) {
   if (fd<0 || fd>NR_FILES-1) {
-    panic("File: %d not found", fd);
+    panic("File: %d not found\n", fd);
   }
   return file_table[fd].size;
 }
@@ -55,31 +55,61 @@ ssize_t fs_read(int fd, void *buf, size_t count) {
   }
   if (fd<3) { 
 	// panic("fd: %d\n", fd);
-	Log("fd: %d\n", fd);
+	Log("fd: %d\n error.\n", fd);
+	return -1;
   }
 
   off_t op_off = file_table[fd].open_offset;
-  int remain = file_table[fd].size - op_off;
-  int len = count;
+  size_t remain = file_table[fd].size - op_off;
+  size_t len = count;
   if (remain<count) { len = remain; }
   ramdisk_read(buf, file_table[fd].disk_offset + op_off, len);
   file_table[fd].open_offset = op_off + len;
   return len;
 }
 
-ssize_t fs_write(int fd, const void *buf, size_t count) {
-  return count;
-  return -1;
+ssize_t fs_write(int fd, void *buf, size_t count) {
+  if (fd<0 || fd>NR_FILES-1) {
+    panic("File: %d not found.\n", fd);
+  }
+  if (fd<3) {
+    Log("fd: %d error.\n", fd);
+	return -1;
+  }
+  off_t op_off = file_table[fd].open_offset;
+  size_t remain = file_table[fd].size - op_off;
+  size_t len = count;
+  if (remain<count) { len = remain; }
+  ramdisk_write(buf, file_table[fd].disk_offset + op_off, len);
+  file_table[fd].open_offset = op_off + len;
+  return len;
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence) {
-  return offset;
-  return (off_t)-1;
+  off_t op_off = file_table[fd].open_offset;
+  size_t max_off = file_table[fd].size;
+  switch (whence) {
+	case SEEK_SET:
+	  op_off = offset;
+	  break;
+	case SEEK_CUR:
+	  op_off += offset;
+	  break;
+	case SEEK_END:
+	  op_off = max_off + offset;
+	  break;
+	default:
+	 panic("whence error.\n");
+  }
+  if (op_off<0) { op_off = 0; }
+  else if (op_off>max_off) { op_off = max_off; }
+  file_table[fd].open_offset = op_off;
+  return op_off;
 }
 
 int fs_close(int fd) {
   if (fd<0 || fd>NR_FILES-1) {
-    panic("File: %d not found", fd);
+    panic("File: %d not found.\n", fd);
   }
   return 0;
 }
