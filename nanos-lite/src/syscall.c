@@ -10,7 +10,7 @@ void sys_exit(int code) {
 }
 
 ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
-  Log("output: %s", buf);
+  Log("output: %s", (char *)buf);
   if (fd==1 || fd==2) {
     char ch;
 	for (int i=0; i<len; i++) {
