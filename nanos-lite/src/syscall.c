@@ -10,7 +10,7 @@ void sys_exit(int code) {
 }
 
 ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
-  Log("output: %s", (char *)buf);
+  Log("output: %s", buf);
   if (fd==1 || fd==2) {
     char ch;
 	for (int i=0; i<len; i++) {
@@ -23,6 +23,7 @@ ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
 }
 
 int sys_brk(uintptr_t addr) {
+  Log("brk");
   return 0;
 }
 
