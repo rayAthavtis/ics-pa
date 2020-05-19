@@ -10,8 +10,8 @@ void sys_exit(int code) {
 }
 
 ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
-  Log("output: %s\n", buf);
   if (fd==1 || fd==2) {
+	Log("buf: %s", (char *)buf);
     char ch;
 	for (int i=0; i<len; i++) {
 	  memcpy(&ch, (void *)buf+i, 1);
