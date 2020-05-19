@@ -35,12 +35,11 @@ int _write(int fd, void *buf, size_t count){
 
 void *_sbrk(intptr_t increment){
   // return (void *)-1;
-  Log("sbrk");
   intptr_t pre_brk = brk;
   intptr_t new_brk = pre_brk + increment;
   if (_syscall_(SYS_brk, new_brk, 0, 0)==0) {
     brk = new_brk;
-	return (void *)pre_prob;
+	return (void *)brk;
   }
   return (void *)-1;
 }
