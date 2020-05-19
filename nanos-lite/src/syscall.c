@@ -10,6 +10,7 @@ void sys_exit(int code) {
 }
 
 ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
+  Log("output: %s\n", buf);
   if (fd==1 || fd==2) {
     char ch;
 	for (int i=0; i<len; i++) {
@@ -20,6 +21,10 @@ ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
   }
   return -1;
 }
+/*
+uintptr_t sys_brk() {
+  
+}*/
 
 _RegSet* do_syscall(_RegSet *r) {
   uintptr_t a[4];
@@ -32,6 +37,7 @@ _RegSet* do_syscall(_RegSet *r) {
 	case SYS_none: SYSCALL_ARG1(r) = sys_none(); break;
 	case SYS_exit: sys_exit(0); break;
 	case SYS_write: SYSCALL_ARG1(r) = sys_write(a[1], a[2], a[3]); break;
+	/* case SYS_brk: SYSCALL_ARG1(r) = sys_brk(a[1]); break; */
 	
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
