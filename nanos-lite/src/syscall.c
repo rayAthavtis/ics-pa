@@ -23,7 +23,7 @@ ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
 }
 
 int sys_brk(uintptr_t addr) {
-  Log("brk");
+  // Log("sys_brk");
   return 0;
 }
 
