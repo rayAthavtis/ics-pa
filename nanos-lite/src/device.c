@@ -19,14 +19,26 @@ void dispinfo_read(void *buf, off_t offset, size_t len) {
 }
 
 void fb_write(const void *buf, off_t offset, size_t len) {
-  // int ly = (offset + len) / sizeof(uint32_t) / _screen.width;
+  int ly = (offset + len) / sizeof(uint32_t) / _screen.width;
   offset /= sizeof(uint32_t);
-  int x = offset % _screen.width;
-  int y = offset / _screen.width;
+  int wx = offset % _screen.width;
+  int wy = offset / _screen.width;
 
-  // if (ly==y)
-  _draw_rect(buf, x, y, len / sizeof(uint32_t), 1);
-  // else if ()
+  if (ly==wy)
+  { _draw_rect(buf, wx, wy, len / sizeof(uint32_t), 1); }
+  else {
+    int tmp = _screen.width - wx;
+	if (ly-wy==1) {
+	  _draw_rect(buf, wx, wy, tmp, 1);
+	  _draw_rect(buf+tmp*sizeof(uint32_t), 0, ly, len/sizeof(uint32_t), 1);
+	}
+	else {
+	  _draw_rect(buf, wx, wy, tmp, 1);
+	  int ny = ly-wy-1;
+	  _draw_rect(buf+tmp*sizeof(uint32_t), 0, wy+1, _screen.width, ny);
+	  _draw_rect(buf+tmp*sizeof(uint32_t)+ny*_screen.width*sizeof(uint32_t), 0, ly, len/sizeof(uint32_t)-tmp-ny*_screen.width, 1);
+	}
+  }
 }
 
 void init_device() {
