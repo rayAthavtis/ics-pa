@@ -27,6 +27,7 @@ extern void ramdisk_write(void *buf, off_t offset, size_t len);
 
 extern void dispinfo_read(void *buf, off_t offset, size_t len);
 extern void fb_write(const void *buf, off_t offset, size_t len);
+extern size_t events_read(void *buf, size_t len);
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
@@ -63,6 +64,9 @@ ssize_t fs_read(int fd, void *buf, size_t count) {
 	Log("fd: %d\n error.\n", fd);
 	return -1;
   }
+
+  if (fd==FD_EVENTS) 
+  { return events_read(buf, count); }
 
   off_t op_off = file_table[fd].open_offset;
   size_t remain = file_table[fd].size - op_off;
