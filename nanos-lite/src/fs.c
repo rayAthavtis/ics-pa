@@ -25,8 +25,12 @@ static Finfo file_table[] __attribute__((used)) = {
 extern void ramdisk_read(void *buf, off_t offset, size_t len);
 extern void ramdisk_write(void *buf, off_t offset, size_t len);
 
+extern void dispinfo_read(void *buf, off_t offset, size_t len);
+extern void fb_write(const void *buf, off_t offset, size_t len);
+
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  file_table[FD_FB].size = _screen.width * _screen.height * sizeof(uint32_t);
 }
 
 size_t fs_filesz(int fd) {
@@ -63,7 +67,10 @@ ssize_t fs_read(int fd, void *buf, size_t count) {
   size_t remain = file_table[fd].size - op_off;
   size_t len = count;
   if (remain<count) { len = remain; }
-  ramdisk_read(buf, file_table[fd].disk_offset + op_off, len);
+  if (fd==FD_DISPINFO)
+  { dispinfo_read(buf, op_off, len); }
+  else
+  { ramdisk_read(buf, file_table[fd].disk_offset + op_off, len); }
   file_table[fd].open_offset = op_off + len;
   return len;
 }
@@ -72,15 +79,27 @@ ssize_t fs_write(int fd, void *buf, size_t count) {
   if (fd<0 || fd>NR_FILES-1) {
     panic("File: %d not found.\n", fd);
   }
-  if (fd<3) {
+  if (fd<3 || fd==FD_DISPINFO) {
     Log("fd: %d error.\n", fd);
 	return -1;
   }
+
   off_t op_off = file_table[fd].open_offset;
   size_t remain = file_table[fd].size - op_off;
   size_t len = count;
   if (remain<count) { len = remain; }
-  ramdisk_write(buf, file_table[fd].disk_offset + op_off, len);
+  switch (fd) {
+    // case FD_STDOUT:
+    // case FD_STDERR:
+    // sys_write() fd==1 || fd==2 call _putc()
+      // break;
+    case FD_FB:
+      fb_write(buf, op_off, len);
+      break;
+    default:
+      ramdisk_write(buf, file_table[fd].disk_offset + op_off, len);
+      break;
+  }
   file_table[fd].open_offset = op_off + len;
   return len;
 }
