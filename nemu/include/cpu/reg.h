@@ -46,7 +46,7 @@ typedef struct {
 	  unsigned : 20;
 	};
   } eflags;
-  uint16_t cs;
+  rtlreg_t cs;
   struct {
     uint16_t limit;
 	uint32_t base;
