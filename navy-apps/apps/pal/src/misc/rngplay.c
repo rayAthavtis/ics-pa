@@ -438,7 +438,10 @@ PAL_RNGPlay(
    int             iDelay = 800 / (iSpeed == 0 ? 16 : iSpeed);
    FILE           *fp;
 
+   Log("load start ok!");
    fp = UTIL_OpenRequiredFile("rng.mkf");
+   Log("rng.mkf ok!");
+
 
    for (; iStartFrame <= iEndFrame; iStartFrame++)
    {
@@ -457,6 +460,7 @@ PAL_RNGPlay(
       // Update the screen
       //
       VIDEO_UpdateScreen(NULL);
+	  Log("video update ok!");
 
       //
       // Fade in the screen if needed
@@ -471,12 +475,14 @@ PAL_RNGPlay(
       // Delay for a while
       //
       PAL_ProcessEvent();
+	  Log("process ok!");
       while (SDL_GetTicks() <= iTime)
       {
          PAL_ProcessEvent();
          SDL_Delay(1);
       }
    }
+   Log("fp ok!");
 
    fclose(fp);
 }
