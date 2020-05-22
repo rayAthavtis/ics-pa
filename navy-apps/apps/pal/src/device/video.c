@@ -416,18 +416,21 @@ VIDEO_UpdateScreen(
    //
    // Lock surface if needed
    //
+   Log("Lock surface ok!");
    if (SDL_MUSTLOCK(gpScreenReal))
    {
       if (SDL_LockSurface(gpScreenReal) < 0)
          return;
    }
 
+   Log("bscalescreen ok!");
    if (!bScaleScreen)
    {
       screenRealHeight -= offset;
       screenRealY = offset / 2;
    }
 
+   Log("lprect ok!");
    if (lpRect != NULL)
    {
       dstrect.x = (SHORT)((INT)(lpRect->x) * gpScreenReal->w / gpScreen->w);
@@ -436,6 +439,7 @@ VIDEO_UpdateScreen(
       dstrect.h = (WORD)((DWORD)(lpRect->h) * screenRealHeight / gpScreen->h);
 
       SDL_SoftStretch(gpScreen, (SDL_Rect *)lpRect, gpScreenReal, &dstrect);
+	  Log("gpscreen ok!");
 
       if (SDL_MUSTLOCK(gpScreenReal))
       {
@@ -449,6 +453,7 @@ VIDEO_UpdateScreen(
       {
          SDL_RenderCopy(gpRenderer, gpTouchOverlay, NULL, NULL);
       }
+	  Log("gptouch ok!");
 #ifdef __WINPHONE__
       if (gpBackKeyMessage)
       {
@@ -458,10 +463,14 @@ VIDEO_UpdateScreen(
            SDL_RenderCopy(gpRenderer, gpBackKeyMessage, NULL, NULL);
          }
       }
+	  Log("gpback ok!");
 #endif
       SDL_RenderPresent(gpRenderer);
+	  Log("gprender ok!");
 #else
+	  Log("update ok!");
       SDL_UpdateRect(gpScreenReal, dstrect.x, dstrect.y, dstrect.w, dstrect.h);
+	  Log("sdl update ok!");
 #endif
    }
    else
