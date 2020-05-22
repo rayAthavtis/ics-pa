@@ -584,6 +584,7 @@ VIDEO_UpdateScreen(
 #else
 			Log("uprect ok!");
 		   SDL_UpdateRect(gpScreenReal, 0, 0, gpScreenReal->w, gpScreenReal->h);
+			Log("upup ok!");
 #endif
 	   }
    }
