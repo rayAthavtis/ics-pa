@@ -522,6 +522,7 @@ main_loop() {
       buf[p - argv[0]] = '\0';
       chdir(buf);
    }
+   Log("pal.app ok!");
 #endif
 
 #ifdef __WINPHONE__
@@ -548,13 +549,14 @@ main_loop() {
 #endif
    PAL_Init(wScreenWidth, wScreenHeight, fFullScreen);
 
-
+   Log("PAL_init ok!");
    //
    // Show the trademark screen and splash screen
    //
    // TODO: should we display these?
    PAL_TrademarkScreen();
    PAL_SplashScreen();
+   Log("splash ok!");
 
    //
    // Run the main game routine

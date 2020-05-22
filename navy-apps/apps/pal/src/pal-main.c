@@ -8,7 +8,7 @@ main(void) {
 	Log("game start!");
 
   hal_init();
-	Log("hal_init ok!");
+	// Log("hal_init ok!");
 	main_loop();
 
 	return 0;
