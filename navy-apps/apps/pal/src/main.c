@@ -232,8 +232,11 @@ PAL_TrademarkScreen(
 --*/
 {
    PAL_SetPalette(3, FALSE);
+   Log("setpalette ok!");
    PAL_RNGPlay(6, 0, 1000, 25);
+   Log("PAL_RNGplay ok!");
    UTIL_Delay(1000);
+   Log("UTIL_Delay ok!");
    PAL_FadeOut(1);
    Log("trademark ok!");
 }
