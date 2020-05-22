@@ -82,6 +82,7 @@ make_EHelper(cwtl) {
   else {
     // TODO();
 	rtl_lr(&t0, R_AX, 2);
+	rtl_sext(&t0, &t0, 2);
 	rtl_sr(R_EAX, 4, &t0);
   }
 
