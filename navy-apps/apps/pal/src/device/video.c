@@ -433,6 +433,7 @@ VIDEO_UpdateScreen(
    Log("lprect ok!");
    if (lpRect != NULL)
    {
+	  Log("lp ok!");
       dstrect.x = (SHORT)((INT)(lpRect->x) * gpScreenReal->w / gpScreen->w);
       dstrect.y = (SHORT)((INT)(screenRealY + lpRect->y) * screenRealHeight / gpScreen->h);
       dstrect.w = (WORD)((DWORD)(lpRect->w) * gpScreenReal->w / gpScreen->w);
@@ -475,6 +476,7 @@ VIDEO_UpdateScreen(
    }
    else
    {
+	   Log("else ok!");
 	   if (g_wShakeTime != 0) 
 	   {
 		   //
@@ -500,6 +502,7 @@ VIDEO_UpdateScreen(
 		   }
 
 		   SDL_SoftStretch(gpScreen, &srcrect, gpScreenReal, &dstrect);
+		 Log("sdl soft ok!");
 
 		   if (g_wShakeTime & 1)
 		   {
@@ -509,10 +512,12 @@ VIDEO_UpdateScreen(
 		   {
 			   dstrect.y = screenRealY;
 		   }
+		 Log("dstrect ok!");
 
 		   dstrect.h = g_wShakeLevel * screenRealHeight / gpScreen->h;
 
 		   SDL_FillRect(gpScreenReal, &dstrect, 0);
+		 Log("fill ok!");
 
 		   if (SDL_MUSTLOCK(gpScreenReal))
 		   {
@@ -521,6 +526,7 @@ VIDEO_UpdateScreen(
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 		   SDL_UpdateTexture(gpTexture, NULL, gpScreenReal->pixels, gpScreenReal->pitch);
+		 Log("sdl update ok!");
 		   SDL_RenderCopy(gpRenderer, gpTexture, NULL, NULL);
 		   if (gpTouchOverlay)
 		   {
@@ -544,6 +550,7 @@ VIDEO_UpdateScreen(
 	   }
 	   else
 	   {
+		 Log("else else ok!");
 		   dstrect.x = 0;
 		   dstrect.y = screenRealY;
 		   dstrect.w = gpScreenReal->w;
@@ -575,6 +582,7 @@ VIDEO_UpdateScreen(
 #endif
 		   SDL_RenderPresent(gpRenderer);
 #else
+			Log("uprect ok!");
 		   SDL_UpdateRect(gpScreenReal, 0, 0, gpScreenReal->w, gpScreenReal->h);
 #endif
 	   }
