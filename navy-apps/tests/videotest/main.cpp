@@ -82,12 +82,15 @@ int main() {
   while (true) {
     NDL_Event e;
     NDL_WaitEvent(&e);
+	printf("event ok!\n");
 
     if (e.type == NDL_EVENT_TIMER) {
       unsigned long upt = e.data;
       if (upt - last > 1000 / FPS) {
         update();
+		printf("update ok!\n");
         redraw();
+		printf("redraw ok!\n");
         last = upt;
       }
     }
