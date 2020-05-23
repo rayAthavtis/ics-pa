@@ -1,4 +1,5 @@
 #include <ndl.h>
+#include <stdio.h>
 #include <assert.h>
 
 const int FPS = 30;
@@ -74,6 +75,7 @@ void update() {
 
 int main() {
   NDL_OpenDisplay(SCREEN_W, SCREEN_H);
+  printf("NDL_ok!\n");
 
   unsigned long last = 0;
 
@@ -90,6 +92,7 @@ int main() {
       }
     }
   }
+  printf("okok!\n");
 
   return 0;
 }
