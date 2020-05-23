@@ -24,8 +24,10 @@ void redraw() {
   int w = SCREEN_W / N;
   int h = SCREEN_H / N;
   int  block_size = w * h;
+  printf("assert start ok!\n");
   assert(block_size <= (int)(sizeof(color_buf) / sizeof(color_buf[0])));
 
+  printf("assert ok!\n");
   int x, y, k;
   for (y = 0; y < N; y ++) {
     for (x = 0; x < N; x ++) {
@@ -33,10 +35,12 @@ void redraw() {
         color_buf[k] = canvas[y][x];
       }
       NDL_DrawRect(color_buf, x * w, y * h, w, h);
+	  printf("draw ok!\n");
     }
   }
 
   NDL_Render();
+  printf("render ok!\n");
 }
 
 static uint32_t p(int tsc) {
