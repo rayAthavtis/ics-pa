@@ -46,11 +46,11 @@ typedef struct {
 	  unsigned : 20;
 	};
   } eflags;
-  rtlreg_t cs;
   struct {
-    uint16_t limit;
-	uint32_t base;
+    uint32_t limit;  // For convenience, defined as 32; in fact, 16
+    uint32_t base;
   } idtr;
+  rtlreg_t cs;  // For convenience, defined as 32; in fact, 16
 } CPU_state;
 
 extern CPU_state cpu;

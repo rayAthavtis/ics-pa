@@ -131,6 +131,7 @@ static int cmd_info(char *args) {
       printf("%s		0x%04x\n", regsw[i], reg_w(i));
 	for (i=0; i<8; i++)  /* 8bit */
 	  printf("%s		0x%02x\n", regsb[i], reg_b(i));
+	printf("eflags: CF=%d, ZF=%d, SF=%d, IF=%d, OF=%d\n", cpu.eflags.CF, cpu.eflags.ZF, cpu.eflags.SF, cpu.eflags.IF, cpu.eflags.OF);
 	return 0;
   }
   if (s=='w') {

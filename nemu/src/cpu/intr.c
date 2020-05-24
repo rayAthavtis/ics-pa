@@ -7,16 +7,18 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
    */
 
   // TODO();
-  rtl_push((rtlreg_t *)&cpu.eflags);
-  rtl_push((rtlreg_t *)&cpu.cs);
-  rtl_push((rtlreg_t *)&ret_addr);
+  rtl_push(&cpu.eflags.init);
+  cpu.eflags.IF = 0;
 
-  uint32_t base = cpu.idtr.base;
+  rtl_push(&cpu.cs);
+  rtl_push(&ret_addr);
 
-  uint32_t low = vaddr_read(base+NO*8, 4) & 0xffff;
-  uint32_t high = vaddr_read(base+NO*8+4, 4) & 0xffff0000;
-  uint32_t offset = low | high;
-  decoding.jmp_eip = offset;
+  rtl_li(&t0,vaddr_read(cpu.idtr.base+8*NO,4));
+  rtl_li(&t1,vaddr_read(cpu.idtr.base+8*NO+4,4));
+  
+  assert(t1&0x00008000);
+
+  decoding.jmp_eip = (t0 & 0xffff) | (t1 & 0xffff0000);
   decoding.is_jmp = 1;
 }
 

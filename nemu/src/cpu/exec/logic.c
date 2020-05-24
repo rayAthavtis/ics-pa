@@ -2,9 +2,9 @@
 
 make_EHelper(test) {
   // TODO();
-  rtl_and(&t2, &id_dest->val, &id_src->val);
+  rtl_and(&t0, &id_dest->val, &id_src->val);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_update_ZFSF(&t0, id_dest->width);
   
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
@@ -40,10 +40,10 @@ make_EHelper(xor) {
 
 make_EHelper(or) {
   // TODO();
-  rtl_or(&t2, &id_dest->val, &id_src->val);
-  operand_write(id_dest, &t2);
+  rtl_or(&t3, &id_dest->val, &id_src->val);
+  operand_write(id_dest, &t3);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_update_ZFSF(&t3, id_dest->width);
 
   rtl_set_CF(&tzero);
   rtl_set_OF(&tzero);
@@ -58,7 +58,7 @@ make_EHelper(sar) {
   rtl_sar(&t2, &id_dest->val, &id_src->val);
   operand_write(id_dest, &t2);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_update_ZFSF(&id_dest->val, id_dest->width);
 
   print_asm_template2(sar);
 }
@@ -70,7 +70,7 @@ make_EHelper(shl) {
   rtl_shl(&t2, &id_dest->val, &id_src->val);
   operand_write(id_dest, &t2);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_update_ZFSF(&id_dest->val, id_dest->width);
 
   print_asm_template2(shl);
 }
@@ -79,10 +79,10 @@ make_EHelper(shr) {
   // TODO();
   // unnecessary to update CF and OF in NEMU
 
-  rtl_shr(&t2, &id_dest->val, &id_src->val);
-  operand_write(id_dest, &t2);
+  rtl_shr(&t0, &id_dest->val, &id_src->val);
+  operand_write(id_dest, &t0);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  rtl_update_ZFSF(&id_dest->val, id_dest->width);
 
   print_asm_template2(shr);
 }
@@ -97,33 +97,25 @@ make_EHelper(setcc) {
 
 make_EHelper(not) {
   // TODO();
-  rtl_li(&t2, id_dest->val);
-  rtl_not(&t2);
-  operand_write(id_dest, &t2);
+  rtl_li(&t1, id_dest->val);
+  rtl_not(&t1);
+  operand_write(id_dest, &t1);
 
-  rtl_update_ZFSF(&t2, id_dest->width);
+  // rtl_update_ZFSF(&t1, id_dest->width);
 
-  rtl_set_CF(&tzero);
-  rtl_set_OF(&tzero);
+  // rtl_set_CF(&tzero);
+  // rtl_set_OF(&tzero);
 
   print_asm_template1(not);
 }
 
 make_EHelper(rol) {
   // TODO();
-  rtl_shl(&t0, &id_dest->val, &id_src->val);
-  t3 = 0;
-  if (decoding.is_operand_size_16)
-  	rtl_addi(&t1, &t3, 16);
-  else
-	rtl_addi(&t1, &t3, 32);
-  rtl_sub(&t1, &t1, &id_src->val);
-  rtl_shr(&t2, &id_dest->val, &t1);
+  rtl_shri(&t2, &id_dest->val, id_dest->width * 8 - id_src->val);
+  rtl_shl(&t3, &id_dest->val, &id_src->val);
+  rtl_or(&t1, &t2, &t3);
 
-  rtl_or(&t0, &t0, &t2);
-  operand_write(id_dest, &t0);
-
-  rtl_update_ZFSF(&t0, id_dest->width);
+  operand_write(id_dest, &t1);
 
   print_asm_template2(rol);
 }

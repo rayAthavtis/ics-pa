@@ -154,19 +154,20 @@ void difftest_step(uint32_t eip) {
   	printf("eip diff: NEMU->0x%08x, QEMU->0x%08x\n", cpu.eip, r.eip);
 	diff = true;
   }
-  else {
-    for (int i=0; i<8; i++)
-	  if (reg_l(i)!=r.array[i]) {
-		printf("%s diff: NEMU->0x%08x, QEMU->0x%08x\n", regsl[i], reg_l(i), r.array[i]);
+  
+  for (int i=0; i<8; i++) {
+	if (reg_l(i)!=r.array[i]) {
+		printf("reg %s diff: NEMU->0x%08x, QEMU->0x%08x\n", regsl[i], reg_l(i), r.array[i]);
 		diff = true;
-	  }
+	}
   }
-  /* if (cpu.eflags.init!=r.eflags) {
+  /*if (cpu.eflags.init!=r.eflags) {
 	printf("eflags diff: NEMU->0x%08x, QEMU->0x%08x\n", cpu.eflags.init, r.eflags);
 	diff = true;
   } */
 
   if (diff) {
+    printf("eflags diff: NEMU->0x%08x, QEMU->0x%08x\n", cpu.eflags.init, r.eflags);
     nemu_state = NEMU_END;
   }
 }

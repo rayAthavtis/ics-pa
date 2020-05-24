@@ -7,11 +7,14 @@ extern void raise_intr(uint8_t NO, vaddr_t ret_addr);
 
 make_EHelper(lidt) {
   // TODO();
-  cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
-  if (decoding.is_operand_size_16)
-  { cpu.idtr.base = vaddr_read(id_dest->addr+2, 4) & 0xffffff; }
-  else
-  { cpu.idtr.base = vaddr_read(id_dest->addr+2, 4); }
+  rtl_li(&t0,id_dest->addr);
+  rtl_li(&cpu.idtr.limit,vaddr_read(t0,2));
+  rtl_li(&cpu.idtr.base,vaddr_read(t0+2,4));
+  // cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
+  // if (decoding.is_operand_size_16)
+  // { cpu.idtr.base = vaddr_read(id_dest->addr+2, 4) & 0xffffff; }
+  // else
+  // { cpu.idtr.base = vaddr_read(id_dest->addr+2, 4); }
 
   print_asm_template1(lidt);
 }
@@ -49,10 +52,10 @@ make_EHelper(iret) {
   // TODO();
 
   rtl_pop(&decoding.jmp_eip);
+  decoding.is_jmp = 1;
   rtl_pop(&cpu.cs);
   rtl_pop(&cpu.eflags.init);
 
-  decoding.is_jmp = 1;
 
   print_asm("iret");
 }
@@ -62,8 +65,8 @@ void pio_write(ioaddr_t, int, uint32_t);
 
 make_EHelper(in) {
   // TODO();
-  rtl_li(&t0, pio_read(id_src->val, id_src->width));
-  operand_write(id_dest, &t0);
+  t2 = pio_read(id_src->val, id_dest->width);
+  operand_write(id_dest, &t2);
 
   print_asm_template2(in);
 
@@ -74,7 +77,7 @@ make_EHelper(in) {
 
 make_EHelper(out) {
   // TODO();
-  pio_write(id_dest->val, id_src->width, id_src->val);
+  pio_write(id_dest->val, id_dest->width, id_src->val);
   
   print_asm_template2(out);
 
