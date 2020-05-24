@@ -16,7 +16,7 @@ update-ramdisk-objcopy:
 	touch src/files.h
 
 update-fsimg:
-	$(MAKE) -s -C $(NAVY_HOME) ISA=$(ISA)
+	$(MAKE) -s -C $(NAVY_HOME) ISA=native
 
 update-ramdisk-fsimg: update-fsimg
 	$(eval FSIMG_FILES := $(shell find $(FSIMG_PATH) -type f))
