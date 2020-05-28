@@ -24,10 +24,8 @@ void redraw() {
   int w = SCREEN_W / N;
   int h = SCREEN_H / N;
   int  block_size = w * h;
-  printf("assert start ok!\n");
   assert(block_size <= (int)(sizeof(color_buf) / sizeof(color_buf[0])));
 
-  printf("assert ok!\n");
   int x, y, k;
   for (y = 0; y < N; y ++) {
     for (x = 0; x < N; x ++) {
@@ -35,12 +33,10 @@ void redraw() {
         color_buf[k] = canvas[y][x];
       }
       NDL_DrawRect(color_buf, x * w, y * h, w, h);
-	  printf("draw ok!\n");
     }
   }
 
   NDL_Render();
-  printf("render ok!\n");
 }
 
 static uint32_t p(int tsc) {
@@ -79,27 +75,22 @@ void update() {
 
 int main() {
   NDL_OpenDisplay(SCREEN_W, SCREEN_H);
-  printf("NDL_ok!\n");
 
   unsigned long last = 0;
 
   while (true) {
     NDL_Event e;
     NDL_WaitEvent(&e);
-	printf("event ok!\n");
 
     if (e.type == NDL_EVENT_TIMER) {
       unsigned long upt = e.data;
       if (upt - last > 1000 / FPS) {
         update();
-		printf("update ok!\n");
         redraw();
-		printf("redraw ok!\n");
         last = upt;
       }
     }
   }
-  printf("okok!\n");
 
   return 0;
 }
