@@ -232,13 +232,9 @@ PAL_TrademarkScreen(
 --*/
 {
    PAL_SetPalette(3, FALSE);
-   Log("setpalette ok!");
    PAL_RNGPlay(6, 0, 1000, 25);
-   Log("PAL_RNGplay ok!");
    UTIL_Delay(1000);
-   Log("UTIL_Delay ok!");
    PAL_FadeOut(1);
-   Log("trademark ok!");
 }
 
 VOID
@@ -287,15 +283,12 @@ PAL_SplashScreen(
    //
    // Create the surfaces
    //
-   Log("create surface ?!");
    lpBitmapDown = SDL_CreateRGBSurface(gpScreen->flags, 320, 200, 8,
       gpScreen->format->Rmask, gpScreen->format->Gmask, gpScreen->format->Bmask,
       gpScreen->format->Amask);
-   Log("lpbitmap down ok!");
    lpBitmapUp = SDL_CreateRGBSurface(gpScreen->flags, 320, 200, 8,
       gpScreen->format->Rmask, gpScreen->format->Gmask, gpScreen->format->Bmask,
       gpScreen->format->Amask);
-   Log("lpbitmap up ok!");
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
    SDL_SetSurfacePalette(lpBitmapDown, gpScreen->format->palette);
@@ -323,7 +316,7 @@ PAL_SplashScreen(
    iTitleHeight = PAL_RLEGetHeight(lpBitmapTitle);
    lpBitmapTitle[2] = 0;
    lpBitmapTitle[3] = 0; // HACKHACK
-   Log("hackhack ok!");
+
    //
    // Generate the positions of the cranes
    //
@@ -342,14 +335,12 @@ PAL_SplashScreen(
       fUseCD = FALSE;
       PAL_PlayMUS(NUM_RIX_TITLE, TRUE, 2);
    }
-   Log("music ok!");
 
    //
    // Clear all of the events and key states
    //
    PAL_ProcessEvent();
    PAL_ClearKeyState();
-   Log("key ok!");
 
    dwBeginTime = SDL_GetTicks();
 
@@ -375,7 +366,7 @@ PAL_SplashScreen(
             rgCurrentPalette[i].b = (BYTE)(palette[i].b * dwTime / 15000);
          }
       }
-	  Log("true ok!");
+	  
       VIDEO_SetPalette(rgCurrentPalette);
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 	  SDL_SetSurfacePalette(lpBitmapDown, gpScreen->format->palette);
@@ -504,11 +495,9 @@ PAL_SplashScreen(
       }
    }
 
-   Log("while ok!");
    SDL_FreeSurface(lpBitmapDown);
    SDL_FreeSurface(lpBitmapUp);
    free(buf);
-   Log("free ok!");
 
    if (!fUseCD)
    {
@@ -533,7 +522,6 @@ main_loop() {
       buf[p - argv[0]] = '\0';
       chdir(buf);
    }
-   Log("pal.app ok!");
 #endif
 
 #ifdef __WINPHONE__
@@ -560,14 +548,12 @@ main_loop() {
 #endif
    PAL_Init(wScreenWidth, wScreenHeight, fFullScreen);
 
-   Log("PAL_init ok!");
    //
    // Show the trademark screen and splash screen
    //
    // TODO: should we display these?
    PAL_TrademarkScreen();
    PAL_SplashScreen();
-   Log("splash ok!");
 
    //
    // Run the main game routine

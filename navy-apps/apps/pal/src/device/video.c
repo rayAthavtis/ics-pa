@@ -416,31 +416,26 @@ VIDEO_UpdateScreen(
    //
    // Lock surface if needed
    //
-   Log("Lock surface ok!");
    if (SDL_MUSTLOCK(gpScreenReal))
    {
       if (SDL_LockSurface(gpScreenReal) < 0)
          return;
    }
 
-   Log("bscalescreen ok!");
    if (!bScaleScreen)
    {
       screenRealHeight -= offset;
       screenRealY = offset / 2;
    }
 
-   Log("lprect ok!");
    if (lpRect != NULL)
    {
-	  Log("lp ok!");
       dstrect.x = (SHORT)((INT)(lpRect->x) * gpScreenReal->w / gpScreen->w);
       dstrect.y = (SHORT)((INT)(screenRealY + lpRect->y) * screenRealHeight / gpScreen->h);
       dstrect.w = (WORD)((DWORD)(lpRect->w) * gpScreenReal->w / gpScreen->w);
       dstrect.h = (WORD)((DWORD)(lpRect->h) * screenRealHeight / gpScreen->h);
 
       SDL_SoftStretch(gpScreen, (SDL_Rect *)lpRect, gpScreenReal, &dstrect);
-	  Log("gpscreen ok!");
 
       if (SDL_MUSTLOCK(gpScreenReal))
       {
@@ -454,7 +449,6 @@ VIDEO_UpdateScreen(
       {
          SDL_RenderCopy(gpRenderer, gpTouchOverlay, NULL, NULL);
       }
-	  Log("gptouch ok!");
 #ifdef __WINPHONE__
       if (gpBackKeyMessage)
       {
@@ -464,19 +458,14 @@ VIDEO_UpdateScreen(
            SDL_RenderCopy(gpRenderer, gpBackKeyMessage, NULL, NULL);
          }
       }
-	  Log("gpback ok!");
 #endif
       SDL_RenderPresent(gpRenderer);
-	  Log("gprender ok!");
 #else
-	  Log("update ok!");
       SDL_UpdateRect(gpScreenReal, dstrect.x, dstrect.y, dstrect.w, dstrect.h);
-	  Log("sdl update ok!");
 #endif
    }
    else
    {
-	   Log("else ok!");
 	   if (g_wShakeTime != 0) 
 	   {
 		   //
@@ -502,7 +491,6 @@ VIDEO_UpdateScreen(
 		   }
 
 		   SDL_SoftStretch(gpScreen, &srcrect, gpScreenReal, &dstrect);
-		 Log("sdl soft ok!");
 
 		   if (g_wShakeTime & 1)
 		   {
@@ -512,12 +500,10 @@ VIDEO_UpdateScreen(
 		   {
 			   dstrect.y = screenRealY;
 		   }
-		 Log("dstrect ok!");
 
 		   dstrect.h = g_wShakeLevel * screenRealHeight / gpScreen->h;
 
 		   SDL_FillRect(gpScreenReal, &dstrect, 0);
-		 Log("fill ok!");
 
 		   if (SDL_MUSTLOCK(gpScreenReal))
 		   {
@@ -526,7 +512,6 @@ VIDEO_UpdateScreen(
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 		   SDL_UpdateTexture(gpTexture, NULL, gpScreenReal->pixels, gpScreenReal->pitch);
-		 Log("sdl update ok!");
 		   SDL_RenderCopy(gpRenderer, gpTexture, NULL, NULL);
 		   if (gpTouchOverlay)
 		   {
@@ -550,7 +535,6 @@ VIDEO_UpdateScreen(
 	   }
 	   else
 	   {
-		 Log("else else ok!");
 		   dstrect.x = 0;
 		   dstrect.y = screenRealY;
 		   dstrect.w = gpScreenReal->w;
@@ -582,9 +566,7 @@ VIDEO_UpdateScreen(
 #endif
 		   SDL_RenderPresent(gpRenderer);
 #else
-			Log("uprect ok!");
 		   SDL_UpdateRect(gpScreenReal, 0, 0, gpScreenReal->w, gpScreenReal->h);
-			Log("upup ok!");
 #endif
 	   }
    }
