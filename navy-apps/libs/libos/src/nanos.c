@@ -40,7 +40,7 @@ void *_sbrk(intptr_t increment){
   intptr_t new_brk = pre_brk + increment;
   if (_syscall_(SYS_brk, new_brk, 0, 0)==0) {
     brk = new_brk;
-	return (void *)brk;
+	return (void *)pre_brk;
   }
   return (void *)-1;
 }
