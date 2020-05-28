@@ -17,6 +17,7 @@ uintptr_t loader(_Protect *as, const char *filename) {
  
   int fd = fs_open(filename, 0, 0);
   size_t size = fs_filesz(fd);
+  Log("File: %s", filename);
   fs_read(fd, DEFAULT_ENTRY, size);
   fs_close(fd);
 

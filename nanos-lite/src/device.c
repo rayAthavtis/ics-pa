@@ -12,8 +12,10 @@ size_t events_read(void *buf, size_t len) {
   int key = _read_key();
   char key_state = (key & 0x8000) ? 'd' : 'u';
   if (key_state=='d') { key ^= 0x8000; }
-  if (key!=_KEY_NONE)
-  { snprintf(buf, len, "k%c %s\n", key_state, keyname[key]); }
+  if (key!=_KEY_NONE) { 
+    snprintf(buf, len, "k%c %s\n", key_state, keyname[key]);
+    Log("k%c %s", key_state, keyname[key]);
+  }
   else { snprintf(buf, len, "t %d\n", _uptime()); }
 
   return strlen(buf);

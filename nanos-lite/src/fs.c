@@ -102,7 +102,6 @@ ssize_t fs_write(int fd, void *buf, size_t count) {
       // break;
     case FD_FB:
       fb_write(buf, op_off, len);
-	  // Log("fb write");
       break;
     default:
       ramdisk_write(buf, file_table[fd].disk_offset + op_off, len);
