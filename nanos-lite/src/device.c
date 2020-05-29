@@ -37,7 +37,7 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   // _draw_rect(buf, wx, wy, len/sizeof(uint32_t), 1);
   
   if (ly==wy)
-  { _draw_rect(buf, wx, wy, len / sizeof(uint32_t), 1); }
+  { _draw_rect(buf, wx, wy, len/sizeof(uint32_t), 1); }
   else {
     int tmp = _screen.width - wx;
 	if (ly-wy==1) {
