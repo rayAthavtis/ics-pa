@@ -7,9 +7,9 @@ extern void raise_intr(uint8_t NO, vaddr_t ret_addr);
 
 make_EHelper(lidt) {
   // TODO();
-  rtl_li(&t0,id_dest->addr);
-  rtl_li(&cpu.idtr.limit,vaddr_read(t0,2));
-  rtl_li(&cpu.idtr.base,vaddr_read(t0+2,4));
+  rtl_li(&t0, id_dest->addr);
+  rtl_li(&cpu.idtr.limit,vaddr_read(t0, 2));
+  rtl_li(&cpu.idtr.base,vaddr_read(t0+2, 4));
   // cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
   // if (decoding.is_operand_size_16)
   // { cpu.idtr.base = vaddr_read(id_dest->addr+2, 4) & 0xffffff; }
@@ -55,7 +55,6 @@ make_EHelper(iret) {
   decoding.is_jmp = 1;
   rtl_pop(&cpu.cs);
   rtl_pop(&cpu.eflags.init);
-
 
   print_asm("iret");
 }
