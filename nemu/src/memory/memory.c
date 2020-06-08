@@ -34,18 +34,18 @@ paddr_t page_translate(vaddr_t addr, int mode) {
 		PTE pte, *pgtable;
 
 		pgdir = (PDE *)(intptr_t)(cpu.cr3.page_directory_base<<12);
-		pde.val = paddr_read((paddr_t)&pgdir[(addr>>22) & 0x3ff], 4);
+		pde.val = paddr_read((intptr_t)&pgdir[(addr>>22) & 0x3ff], 4);
 		assert(pde.present);
 		pde.accessed = 1;
 		
 		pgtable = (PTE *)(intptr_t)(pde.page_frame<<12);
-		pte.val = paddr_read((paddr_t)&pgtable[(addr>>12) & 0x3ff], 4);
+		pte.val = paddr_read((intptr_t)&pgtable[(addr>>12) & 0x3ff], 4);
 		assert(pte.present);
 		pte.accessed = 1;
 
 		if (mode) { pte.dirty = 1; }
 
-    uint32_t offset = addr & ~PAGE_MASK;
+    uint32_t offset = addr & PAGE_MASK;
 		paddr_t paddr = (pte.page_frame<<12) | offset;
   	return paddr;
   }
@@ -53,24 +53,18 @@ paddr_t page_translate(vaddr_t addr, int mode) {
 }
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
-	/*  
-	if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK)) {
+  if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK)) {
 		assert(0); 
 	}
-	Log("addr: %x", addr);
   paddr_t paddr = page_translate(addr, 0);
-	Log("paddr: %x", paddr);
-	*/
-  return paddr_read(addr, len);
+  return paddr_read(paddr, len);
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
-	/*
   if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK))  { 
 		assert(0); 
 	}
 	
   paddr_t paddr = page_translate(addr, 1);
-	*/
-  paddr_write(addr, len, data);
+  paddr_write(paddr, len, data);
 }
