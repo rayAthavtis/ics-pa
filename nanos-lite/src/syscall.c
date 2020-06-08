@@ -7,6 +7,8 @@ extern ssize_t fs_write(int fd, void *buf, size_t count);
 extern off_t fs_lseek(int fd, off_t offset, int whence);
 extern int fs_close(int fd);
 
+extern int mm_brk(uint32_t new_brk);
+
 uintptr_t sys_none() {
   return 1;
 }
@@ -33,7 +35,8 @@ ssize_t sys_write(int fd, uintptr_t buf, size_t len) {
 
 int sys_brk(uintptr_t addr) {
   // Log("sys_brk");
-  return 0;
+  // return 0;
+	return mm_brk(addr);
 }
 
 int sys_open(uintptr_t pathname, int flags, mode_t mode) {
