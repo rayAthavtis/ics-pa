@@ -54,10 +54,21 @@ paddr_t page_translate(vaddr_t addr, int mode) {
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
   if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK)) {
-		assert(0); 
+		// assert(0); 
+		union {
+			uint8_t bytes[4];
+			uint32_t dword;
+		} data = {0};
+		for (int i=0; i<len; i++) {
+			paddr_t paddr = page_translate(addr+i, 0);
+			data.bytes[i] = paddr_read(paddr, 1);
+		}
+		return data.dword;
 	}
-  paddr_t paddr = page_translate(addr, 0);
-  return paddr_read(paddr, len);
+	else {
+  	paddr_t paddr = page_translate(addr, 0);
+  	return paddr_read(paddr, len);
+	}
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
