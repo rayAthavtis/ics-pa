@@ -34,13 +34,13 @@ paddr_t page_translate(vaddr_t addr, int mode) {
 		PTE pte, *pgtable;
 
     uint32_t pde_idx = (addr>>22) & 0x3ff;
-    uint32_t pte_idx = (addr>>12) & 0x3ff;
-		pgdir = (PDE *)(cpu.cr3.page_directory_base<<12);
+		pgdir = (PDE *)(intptr_t)(cpu.cr3.page_directory_base<<12);
 		pde.val = paddr_read((paddr_t)&pgdir[pde_idx], 4);
 		assert(pde.present);
 		pde.accessed = 1;
 		
-		pgtable = (PTE *)(pde.page_frame<<12);
+    uint32_t pte_idx = (addr>>12) & 0x3ff;
+		pgtable = (PTE *)(intptr_t)(pde.page_frame<<12);
 		pte.val = paddr_read((paddr_t)&pgtable[pte_idx], 4);
 		assert(pte.present);
 		pte.accessed = 1;
