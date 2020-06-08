@@ -33,15 +33,13 @@ paddr_t page_translate(vaddr_t addr, int mode) {
 		PDE pde, *pgdir;
 		PTE pte, *pgtable;
 
-    uint32_t pde_idx = (addr>>22) & 0x3ff;
 		pgdir = (PDE *)(intptr_t)(cpu.cr3.page_directory_base<<12);
-		pde.val = paddr_read((paddr_t)&pgdir[pde_idx], 4);
+		pde.val = paddr_read((paddr_t)&pgdir[(addr>>22) & 0x3ff], 4);
 		assert(pde.present);
 		pde.accessed = 1;
 		
-    uint32_t pte_idx = (addr>>12) & 0x3ff;
 		pgtable = (PTE *)(intptr_t)(pde.page_frame<<12);
-		pte.val = paddr_read((paddr_t)&pgtable[pte_idx], 4);
+		pte.val = paddr_read((paddr_t)&pgtable[(addr>>12) & 0x3ff], 4);
 		assert(pte.present);
 		pte.accessed = 1;
 
@@ -55,13 +53,17 @@ paddr_t page_translate(vaddr_t addr, int mode) {
 }
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
-  if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK)) { assert(0); }
+  if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK)) {
+		assert(0); 
+	}
   paddr_t paddr = page_translate(addr, 0);
   return paddr_read(paddr, len);
 }
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
-  if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK))  { assert(0); }
+  if (((addr+len-1)&~PAGE_MASK)!=(addr&~PAGE_MASK))  { 
+		assert(0); 
+	}
   paddr_t paddr = page_translate(addr, 1);
   paddr_write(paddr, len, data);
 }
