@@ -10,7 +10,7 @@ void init_device(void);
 void init_irq(void);
 void init_fs(void);
 uint32_t loader(_Protect *, const char *);
-extern void load_prog(const char *filename);
+// extern void load_prog(const char *filename);
 
 int main() {
 #ifdef HAS_PTE
@@ -38,9 +38,9 @@ int main() {
   // uint32_t entry = loader(NULL, "/bin/bmptest");
   // uint32_t entry = loader(NULL, "/bin/events");
   // uint32_t entry = loader(NULL, "/bin/videotest");
-  // uint32_t entry = loader(NULL, "/bin/pal");
-  // ((void (*)(void))entry)();
-  load_prog("/bin/pal");
+  uint32_t entry = loader(NULL, "/bin/pal");
+  ((void (*)(void))entry)();
+  // load_prog("/bin/pal");
 
   panic("Should not reach here");
 }
