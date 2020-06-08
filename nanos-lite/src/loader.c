@@ -4,7 +4,7 @@ extern uint8_t ramdisk_start;
 extern uint8_t ramdisk_end;
 #define RAMDISK_SIZE ((&ramdisk_end) - (&ramdisk_start))
 extern void ramdisk_read(void *buf, off_t offset, size_t len);
-#define DEFAULT_ENTRY ((void *)0x4000000)
+#define DEFAULT_ENTRY ((void *)0x8048000)
 
 extern size_t fs_filesz(int fd);
 extern int fs_open(const char *pathname, int flags, mode_t mode);
