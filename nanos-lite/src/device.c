@@ -15,6 +15,10 @@ size_t events_read(void *buf, size_t len) {
   if (key!=_KEY_NONE) { 
     snprintf(buf, len, "k%c %s\n", key_state, keyname[key]);
     Log("k%c %s", key_state, keyname[key]);
+    if (key_state=='d' && key==_KEY_F12) {
+      extern int current_game;
+      current_game = (current_game==0) ? 2 : 0;
+    }
   }
   else { snprintf(buf, len, "t %d\n", _uptime()); }
 
