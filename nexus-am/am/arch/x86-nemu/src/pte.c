@@ -84,5 +84,18 @@ void _unmap(_Protect *p, void *va) {
 }
 
 _RegSet *_umake(_Protect *p, _Area ustack, _Area kstack, void *entry, char *const argv[], char *const envp[]) {
-  return NULL;
+  uint32_t *stack = ustack.end - 4;
+  for (int i=0; i<3; i++) {
+    *stack = 0x0;
+    stack--;
+  }
+
+  struct { _RegSet *tf; } *pcb = ustack.start;
+  pcb->tf = (void *)(stack - sizeof(_RegSet));
+  pcb->tf->eflags = 0x202;
+  pcb->tf->cs = 0x8;
+  pcb->tf->eip = (uint32_t)entry;
+  
+  return pcb->tf;
+  // return NULL;
 }
